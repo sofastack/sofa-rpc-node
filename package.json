@@ -1,0 +1,50 @@
+{
+  "name": "sofa-rpc-node",
+  "version": "1.0.0",
+  "description": "SOFARPC Nodejs Implementation",
+  "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "autod": "autod",
+    "lint": "eslint . --ext .js",
+    "cov": "TEST_TIMEOUT=10000 egg-bin cov",
+    "test": "npm run lint && npm run test-local",
+    "test-local": "egg-bin test",
+    "pkgfiles": "egg-bin pkgfiles --check",
+    "ci": "npm run autod -- --check && npm run pkgfiles && npm run lint && npm run cov",
+    "contributors": "contributors -f plain -o AUTHORS"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alipay/sofa-rpc-node.git"
+  },
+  "keywords": [
+    "sofa",
+    "rpc"
+  ],
+  "author": "gxcsoccer <gxcsoccer@126.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alipay/sofa-rpc-node/issues"
+  },
+  "homepage": "https://github.com/alipay/sofa-rpc-node#readme",
+  "dependencies": {
+
+  },
+  "devDependencies": {
+    "autod": "^3.0.1",
+    "contributors": "^0.5.1",
+    "egg-bin": "^4.7.0",
+    "egg-ci": "^1.8.0",
+    "eslint": "^4.19.1",
+    "eslint-config-egg": "^7.0.0"
+  },
+  "engines": {
+    "node": ">= 8.0.0"
+  },
+  "ci": {
+    "version": "8, 10"
+  }
+}
