@@ -31,20 +31,39 @@
   },
   "homepage": "https://github.com/alipay/sofa-rpc-node#readme",
   "dependencies": {
-
+    "address": "^1.0.3",
+    "await-first": "^1.0.0",
+    "cluster-client": "^2.1.0",
+    "debug": "^3.1.0",
+    "easy-table": "^1.1.1",
+    "graceful": "^1.0.1",
+    "is-type-of": "^1.2.0",
+    "mz-modules": "^2.1.0",
+    "pump": "^3.0.0",
+    "sdk-base": "^3.4.0",
+    "sofa-bolt-node": "^1.0.0",
+    "urlencode": "^1.1.0",
+    "utility": "^1.13.1",
+    "zookeeper-cluster-client": "^2.0.1"
   },
   "devDependencies": {
+    "antpb": "^1.0.0",
     "autod": "^3.0.1",
+    "await-event": "^2.1.0",
+    "coffee": "^4.1.0",
     "contributors": "^0.5.1",
     "egg-bin": "^4.7.0",
     "egg-ci": "^1.8.0",
     "eslint": "^4.19.1",
-    "eslint-config-egg": "^7.0.0"
+    "eslint-config-egg": "^7.0.0",
+    "mm": "^2.2.0",
+    "pedding": "^1.1.0"
   },
   "engines": {
     "node": ">= 8.0.0"
   },
   "ci": {
+    "type": "travis",
     "version": "8, 10"
   }
 }

@@ -3,3 +3,4 @@ coverage
 examples/**/app/public
 logs
 run
+zookeeper-3.4.6/
