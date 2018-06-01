@@ -29,6 +29,7 @@ class MockConnection extends Base {
 
   async _init() {
     if (!availableAddress.has(this.address.host)) {
+      this._circuitBreaker.close();
       throw new Error('connect refused');
     }
     this._connected = true;
