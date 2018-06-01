@@ -9,7 +9,7 @@ before_install:
   - 'mv zookeeper-3.4.6/conf/zoo_sample.cfg zookeeper-3.4.6/conf/zoo.cfg'
   - './zookeeper-3.4.6/bin/zkServer.sh start'
 install:
-  - npm i npminstall && npminstall
+  - npm i npminstall && npminstall --registry=https://registry.npm.taobao.org
 script:
   - npm run ci
 after_script:
