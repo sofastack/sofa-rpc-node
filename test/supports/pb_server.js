@@ -30,6 +30,8 @@ exports.start = async function() {
     interfaceName: 'com.alipay.sofa.rpc.test.ProtoService',
   }, {
     async echoObj(req) {
+      if (req.name === 'XIAOCHEN') throw new Error('mock error');
+
       req = req.toObject({ enums: String });
       await sleep(10);
       return {

@@ -45,6 +45,9 @@ describe('test/client/client.test.js', () => {
       interfaceName: 'com.alipay.sofa.rpc.test.ProtoService',
       targetAppName: 'pb',
     });
+    let req;
+    consumer.once('request', r => { req = r; });
+    assert(consumer.targetAppName === 'pb');
     assert(client.consumerMap && client.consumerMap.size === 1);
     assert(client.consumerMap.get('com.alipay.sofa.rpc.test.ProtoService:1.0@SOFA@pb') === consumer);
     await consumer.ready();
@@ -55,6 +58,8 @@ describe('test/client/client.test.js', () => {
     }];
     const res = await consumer.invoke('echoObj', args);
     assert.deepEqual(res, { code: 200, message: 'hello Peter, you are in A' });
+
+    assert(req && req.targetAppName === 'pb');
 
     await client.close();
   });
