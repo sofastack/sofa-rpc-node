@@ -339,4 +339,59 @@ describe('test/client/consumer.test.js', () => {
     assert(!res.appResponse);
     consumer.close();
   });
+
+
+  it('should throw BizError', async function() {
+    const consumer = new RpcConsumer({
+      interfaceName: 'com.alipay.sofa.rpc.test.ProtoService',
+      connectionManager,
+      connectionOpts: {
+        protocol,
+      },
+      registry,
+      logger,
+    });
+    await consumer.ready();
+    let req;
+    let res;
+    consumer.once('request', val => {
+      req = val;
+    });
+    consumer.once('response', val => {
+      assert(val && val.req && val.res);
+      res = val.res;
+    });
+
+    const args = [{
+      name: 'XIAOCHEN',
+      group: 'A',
+    }];
+    try {
+      await consumer.invoke('echoObj', args);
+      assert(false);
+    } catch (err) {
+      assert(err.message.includes('mock error'));
+    }
+
+    assert(req);
+    assert(req.serverSignature === 'com.alipay.sofa.rpc.test.ProtoService:1.0');
+    assert(req.methodName === 'echoObj');
+    assert.deepEqual(req.args, args);
+    assert(req.timeout === 3000);
+    assert(req.meta.id);
+    assert(req.meta.resultCode === '01');
+    assert(req.meta.connectionGroup === 'com.alipay.sofa.rpc.test.ProtoService:1.0@SOFA');
+    assert(req.meta.codecType === 'protobuf');
+    assert(req.meta.boltVersion === 1);
+    assert(!req.meta.crcEnable);
+    assert(req.meta.timeout === 3000);
+    assert(req.meta.reqSize === 271);
+    assert(req.meta.resSize === 113);
+    assert(req.meta.rt >= 0);
+
+    assert(res && res.error && res.error.message.includes('mock error'));
+    console.log(res.error);
+    assert(!res.appResponse);
+    consumer.close();
+  });
 });
