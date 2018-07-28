@@ -40,6 +40,7 @@ describe('test/client/consumer.test.js', () => {
   it('should invoke ok', async function() {
     const consumer = new RpcConsumer({
       interfaceName: 'com.alipay.sofa.rpc.test.ProtoService',
+      loadbalancerClass: 'random',
       connectionManager,
       connectionOpts: {
         protocol,

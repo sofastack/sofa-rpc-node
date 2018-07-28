@@ -286,7 +286,20 @@ describe('test/client/connection.test.js', () => {
         const res = await connection.invoke(req);
         assert(res.error && req.meta.resultCode === '03');
       }
+      assert(connection.lastInvokeTime);
       await HealthCounter.getInstance(connection.key).await('next');
+      assert(connection.latestHealthCount);
+      assert(connection.latestHealthCount.toString().includes('HealthCounts[4 / 4 : 100%'));
+      console.log(connection.latestHealthCount.toString());
+
+      connection.resetCounter();
+
+      await HealthCounter.getInstance(connection.key).await('next');
+      assert(connection.latestHealthCount.toString() === 'HealthCounts[0 / 0 : 0%, avg rt : 0ms]');
+
+      const lastActiveTime = connection._lastActiveTime;
+      connection.heartbeat();
+      assert(connection._lastActiveTime === lastActiveTime);
 
       req.timeout = 3000;
       const res = await connection.invoke(req);
@@ -331,5 +344,41 @@ describe('test/client/connection.test.js', () => {
       res = await connection.invoke(req);
       assert.deepEqual(res, { error: null, appResponse: 3, responseProps: null });
     });
+  });
+
+  it('心跳', async function() {
+    const address = urlparse('bolt://127.0.0.1:' + port, true);
+    const connection = new RpcConnection({ address, logger, maxIdleTime: 100 });
+    assert(connection._lastActiveTime);
+
+    const lastActiveTime = connection._lastActiveTime;
+
+    await sleep(101);
+
+    connection.heartbeat();
+
+    assert(connection._lastActiveTime !== lastActiveTime);
+
+    await connection.close();
+  });
+
+  it('should handle RpcRequestEncodeError', async function() {
+    const address = urlparse('bolt://127.0.0.1:' + port + '?serialization=hessian2', true);
+    const connection = new RpcConnection({ address, logger });
+
+    const res = await connection.invoke({
+      serverSignature: 'com.alipay.test.TestService:1.0',
+      methodName: 'test',
+      args: [{
+        $class: 'java.lang.String',
+        $: false,
+      }],
+      timeout: 3000,
+      meta: {},
+    });
+    assert(res.error);
+    assert(res.error.name === 'RpcRequestEncodeError');
+    assert(res.appResponse === null);
+    await connection.close();
   });
 });
