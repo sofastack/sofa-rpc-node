@@ -44,6 +44,7 @@ describe('test/client/client.test.js', () => {
     const consumer = client.createConsumer({
       interfaceName: 'com.alipay.sofa.rpc.test.ProtoService',
       targetAppName: 'pb',
+      loadbalancerClass: 'consistentHash',
     });
     let req;
     consumer.once('request', r => { req = r; });

@@ -84,4 +84,34 @@ describe('test/client/scheduler.test.js', () => {
     assert(i === 10);
     assert(j === 3);
   });
+
+  it('should support prepend', async function() {
+    let i = 0;
+    let j = 0;
+    let k = 0;
+    const counter_1 = () => {
+      i++;
+      assert(i > k);
+    };
+    const counter_2 = () => {
+      j++;
+      // 保证 counter_2 先执行
+      assert(j > i);
+      assert(j > k);
+    };
+    const counter_3 = () => { k++; };
+    const close_1 = scheduler.interval(counter_1, 100);
+    const close_2 = scheduler.interval(counter_2, 100, true);
+    const close_3 = scheduler.interval(counter_3, 100);
+
+    await sleep(1001);
+
+    assert(i === 9);
+    assert(j === 9);
+    assert(k === 9);
+
+    close_1();
+    close_2();
+    close_3();
+  });
 });

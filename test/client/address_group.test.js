@@ -19,6 +19,10 @@ describe('test/address_group.test.js', () => {
     connectionManager = new ConnectionManager({ logger });
   });
 
+  after(async function() {
+    await connectionManager.close();
+  });
+
   const args = [{
     $class: 'java.lang.String',
     $: '123',
