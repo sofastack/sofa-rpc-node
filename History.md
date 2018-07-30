@@ -1,4 +1,12 @@
 
+1.1.0 / 2018-07-31
+==================
+
+**features**
+  * [[`409508e`](http://github.com/alipay/sofa-rpc-node/commit/409508e95fb3d667b65de075779d3c48354f63b4)] - feat: support more loadbalance algorithm (#7) (zōng yǔ <<gxcsoccer@users.noreply.github.com>>)
+  * [[`aa7f1bf`](http://github.com/alipay/sofa-rpc-node/commit/aa7f1bfb971da3e0a52eaace3ca4b9667735df94)] - feat: support more loadbalance algorithm (#7) (zōng yǔ <<gxcsoccer@users.noreply.github.com>>)
+  * [[`4608ddd`](http://github.com/alipay/sofa-rpc-node/commit/4608ddd729da9b80f822fa88f4267ba26793e158)] - feat: support more loadbalance algorithm (#7) (zōng yǔ <<gxcsoccer@users.noreply.github.com>>)
+
 1.0.1 / 2018-06-29
 ==================
 
