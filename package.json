@@ -50,13 +50,12 @@
     "antpb": "^1.0.0",
     "autod": "^3.0.1",
     "await-event": "^2.1.0",
-    "coffee": "^4.1.0",
+    "coffee": "^5.1.0",
     "contributors": "^0.5.1",
-    "egg-bin": "^4.7.1",
-    "egg-ci": "^1.8.0",
-    "eslint": "^5.2.0",
+    "egg-bin": "^4.8.1",
+    "eslint": "^5.4.0",
     "eslint-config-egg": "^7.0.0",
-    "mm": "^2.2.2",
+    "mm": "^2.4.0",
     "pedding": "^1.1.0"
   },
   "engines": {

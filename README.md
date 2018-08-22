@@ -312,7 +312,8 @@ invoke().catch(console.error);
 
 ## 三、相关文档
 
-- [聊聊 Nodejs RPC（一）](https://github.com/alipay/sofa-rpc-node/wiki/%E8%81%8A%E8%81%8A-Nodejs-RPC%EF%BC%88%E4%B8%80%EF%BC%89)
+- [聊聊 Node.js RPC（一）— 协议](https://www.yuque.com/egg/nodejs/dklip5)
+- [聊聊 Node.js RPC（二）— 服务发现](https://www.yuque.com/egg/nodejs/mhgl9f)
 
 ## 四、如何贡献
 

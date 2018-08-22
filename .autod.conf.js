@@ -10,7 +10,6 @@ module.exports = {
   devdep: [
     'autod',
     'egg-bin',
-    'egg-ci',
     'eslint',
     'eslint-config-egg',
     'contributors',
