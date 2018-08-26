@@ -52,9 +52,9 @@
     "await-event": "^2.1.0",
     "coffee": "^5.1.0",
     "contributors": "^0.5.1",
-    "egg-bin": "^4.8.1",
+    "egg-bin": "^4.8.2",
     "eslint": "^5.4.0",
-    "eslint-config-egg": "^7.0.0",
+    "eslint-config-egg": "^7.1.0",
     "mm": "^2.4.0",
     "pedding": "^1.1.0"
   },
