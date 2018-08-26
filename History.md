@@ -1,4 +1,13 @@
 
+1.1.1 / 2018-08-26
+==================
+
+**fixes**
+  * [[`63df62e`](http://github.com/alipay/sofa-rpc-node/commit/63df62e27693eb96dc63487c2ce804392567b3a3)] - fix: consumer should wait registry ready (#10) (zōng yǔ <<gxcsoccer@users.noreply.github.com>>)
+
+**others**
+  * [[`71596ee`](http://github.com/alipay/sofa-rpc-node/commit/71596ee2ec4b920531e7846643109170774a68bd)] - chore: remove egg-ci & change readme (#9) (zōng yǔ <<gxcsoccer@users.noreply.github.com>>)
+
 1.1.0 / 2018-07-31
 ==================
 
