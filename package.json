@@ -32,7 +32,9 @@
   "homepage": "https://github.com/alipay/sofa-rpc-node#readme",
   "dependencies": {
     "address": "^1.0.3",
+    "await-event": "^2.1.0",
     "await-first": "^1.0.0",
+    "byte": "^2.0.0",
     "cluster-client": "^2.1.1",
     "debug": "^3.1.0",
     "easy-table": "^1.1.1",
@@ -52,10 +54,10 @@
     "await-event": "^2.1.0",
     "coffee": "^5.1.0",
     "contributors": "^0.5.1",
-    "egg-bin": "^4.8.2",
-    "eslint": "^5.4.0",
+    "egg-bin": "^4.8.4",
+    "eslint": "^5.5.0",
     "eslint-config-egg": "^7.1.0",
-    "mm": "^2.4.0",
+    "mm": "^2.4.1",
     "pedding": "^1.1.0"
   },
   "engines": {
