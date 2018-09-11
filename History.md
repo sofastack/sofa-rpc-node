@@ -1,4 +1,10 @@
 
+1.2.1 / 2018-09-12
+==================
+
+**fixes**
+  * [[`69a9dc7`](http://github.com/alipay/sofa-rpc-node/commit/69a9dc790bf94af74314ebe27e092afadf9f7d08)] - fix: should end http2stream (#12) (zōng yǔ <<gxcsoccer@users.noreply.github.com>>)
+
 1.2.0 / 2018-09-11
 ==================
 
