@@ -1,4 +1,10 @@
 
+1.2.0 / 2018-09-11
+==================
+
+**features**
+  * [[`9a94c21`](http://github.com/alipay/sofa-rpc-node/commit/9a94c2100030aa2efca372680c11ff8db5cda00f)] - feat: support gRPC (#11) (zōng yǔ <<gxcsoccer@users.noreply.github.com>>)
+
 1.1.1 / 2018-08-26
 ==================
 
