@@ -57,10 +57,12 @@ describe('test/client/client.test.js', () => {
       name: 'Peter',
       group: 'A',
     }];
-    const res = await consumer.invoke('echoObj', args);
+    const ctx = { foo: 'bar' };
+    const res = await consumer.invoke('echoObj', args, { ctx });
     assert.deepEqual(res, { code: 200, message: 'hello Peter, you are in A' });
 
     assert(req && req.targetAppName === 'pb');
+    assert(req.ctx === ctx);
 
     await client.close();
   });
