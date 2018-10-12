@@ -1,4 +1,10 @@
 
+1.3.1 / 2018-10-12
+==================
+
+**fixes**
+  * [[`62d3b14`](http://github.com/alipay/sofa-rpc-node/commit/62d3b14837c898c2f5596802f18ea76dc713bfd0)] - fix: avoid experimental warning of http2 (#14) (zōng yǔ <<gxcsoccer@users.noreply.github.com>>)
+
 1.3.0 / 2018-10-06
 ==================
 
