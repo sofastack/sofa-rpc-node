@@ -1,4 +1,10 @@
 
+1.4.0 / 2018-10-22
+==================
+
+**features**
+  * [[`e3af79a`](http://github.com/alipay/sofa-rpc-node/commit/e3af79a0e58fd56408767f436fab328e4d328155)] - feat: add service publish info (#16) (zōng yǔ <<gxcsoccer@users.noreply.github.com>>)
+
 1.3.1 / 2018-10-12
 ==================
 
