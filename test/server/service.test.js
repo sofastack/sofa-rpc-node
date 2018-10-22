@@ -39,6 +39,13 @@ describe('test/server/service.test.js', () => {
     assert(!service.app);
     assert(!service.registry);
 
+    assert.deepEqual(service.normalizeReg('bolt://127.0.0.1:12200'), {
+      interfaceName: 'com.node.test.TestService',
+      version: '1.0',
+      group: 'SOFA',
+      url: 'bolt://127.0.0.1:12200',
+    });
+
     await service.publish('bolt://127.0.0.1:12200');
     assert(!service.publishUrl);
     await service.unPublish();
