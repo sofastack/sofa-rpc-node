@@ -7,7 +7,7 @@ const AddressGroup = require('../../lib/client/address_group');
 const ConnectionManager = require('../../lib/client/connection_mgr');
 const logger = console;
 
-describe('test/fault_retry.test.js', () => {
+describe('test/client/fault_retry.test.js', () => {
   let connectionManager;
   before(() => {
     connectionManager = new ConnectionManager({ logger });
@@ -18,7 +18,6 @@ describe('test/fault_retry.test.js', () => {
   });
 
   it('should retry fault ok', async function() {
-    this.timeout(20000);
     const addressGroup = new AddressGroup({
       key: 'fault',
       logger,
@@ -45,7 +44,9 @@ describe('test/fault_retry.test.js', () => {
 
     addressGroup.addressList = [];
 
-    setTimeout(() => { addressGroup.emit('timeout'); }, 10000);
+    setTimeout(() => {
+      addressGroup.emit('timeout');
+    }, 9000);
 
     const o = await addressGroup.awaitFirst([ 'retry', 'timeout' ]);
     assert(o.event === 'timeout');

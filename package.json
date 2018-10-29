@@ -9,7 +9,7 @@
   "scripts": {
     "autod": "autod",
     "lint": "eslint . --ext .js",
-    "cov": "TEST_TIMEOUT=10000 egg-bin cov",
+    "cov": "TEST_TIMEOUT=20000 egg-bin cov",
     "test": "npm run lint && npm run test-local",
     "test-local": "egg-bin test",
     "pkgfiles": "egg-bin pkgfiles --check",
@@ -54,8 +54,9 @@
     "await-event": "^2.1.0",
     "coffee": "^5.1.0",
     "contributors": "^0.5.1",
+    "dubbo-remoting": "^2.1.2",
     "egg-bin": "^4.9.0",
-    "eslint": "^5.7.0",
+    "eslint": "^5.8.0",
     "eslint-config-egg": "^7.1.0",
     "mm": "^2.4.1",
     "pedding": "^1.1.0"
