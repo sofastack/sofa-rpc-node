@@ -50,6 +50,7 @@ describe('test/client/consumer.test.js', () => {
     });
     assert(consumer.logger);
     await consumer.ready();
+    assert(consumer.id === 'com.alipay.sofa.rpc.test.ProtoService:1.0');
     const args = [{
       name: 'Peter',
       group: 'A',
@@ -341,7 +342,6 @@ describe('test/client/consumer.test.js', () => {
     consumer.close();
   });
 
-
   it('should throw BizError', async function() {
     const consumer = new RpcConsumer({
       interfaceName: 'com.alipay.sofa.rpc.test.ProtoService',
@@ -394,5 +394,21 @@ describe('test/client/consumer.test.js', () => {
     console.log(res.error);
     assert(!res.appResponse);
     consumer.close();
+  });
+
+  it('should support consumer without version', async function() {
+    const consumer = new RpcConsumer({
+      interfaceName: 'com.alipay.sofa.rpc.test.ProtoService',
+      version: null,
+      connectionManager,
+      connectionOpts: {
+        protocol,
+      },
+      registry,
+      logger,
+    });
+    assert(consumer.logger);
+    await consumer.ready();
+    assert(consumer.id === 'com.alipay.sofa.rpc.test.ProtoService');
   });
 });
