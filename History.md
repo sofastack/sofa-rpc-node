@@ -1,4 +1,10 @@
 
+1.5.0 / 2018-10-30
+==================
+
+**features**
+  * [[`8f846d6`](http://github.com/alipay/sofa-rpc-node/commit/8f846d6d31f40674aa22689bfd9d7e0fdec80a9f)] - feat: support dubbo registry rule (#17) (zōng yǔ <<gxcsoccer@users.noreply.github.com>>)
+
 1.4.0 / 2018-10-22
 ==================
 
