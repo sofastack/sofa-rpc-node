@@ -1,4 +1,10 @@
 
+1.5.1 / 2018-10-31
+==================
+
+**fixes**
+  * [[`8355941`](http://github.com/alipay/sofa-rpc-node/commit/835594142d0faa10ff7addc0c175476cb22a943c)] - fix: dubbo registry issue (#18) (zōng yǔ <<gxcsoccer@users.noreply.github.com>>)
+
 1.5.0 / 2018-10-30
 ==================
 
