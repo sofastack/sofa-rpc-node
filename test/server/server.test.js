@@ -4,6 +4,7 @@ const mm = require('mm');
 const assert = require('assert');
 const sleep = require('mz-modules/sleep');
 const request = require('../../').test;
+const dubboProtocol = require('dubbo-remoting');
 const RpcClient = require('../../').client.RpcClient;
 const RpcServer = require('../../').server.RpcServer;
 const ZookeeperRegistry = require('../../').registry.ZookeeperRegistry;
@@ -43,7 +44,19 @@ describe('test/server.test.js', () => {
       logger,
       codecType: 'protobuf',
     });
-    assert(server.url.endsWith('dynamic=true&appName=test&version=1.0&timeout=3000&serialization=protobuf&weight=100&accepts=100000&language=nodejs&rpcVer=50400'));
+    assert(server.url.endsWith('dynamic=true&appName=test&timeout=3000&serialization=protobuf&weight=100&accepts=100000&language=nodejs&rpcVer=50400'));
+    await server.close();
+  });
+
+  it('should format url with property protocol type', async function() {
+    server = new RpcServer({
+      appName: 'test',
+      protocol: dubboProtocol,
+      logger,
+      codecType: 'hessian2',
+    });
+    assert(server.url.startsWith('dubbo://'));
+    assert(server.url.endsWith('dynamic=true&appName=test&timeout=3000&serialization=hessian2&weight=100&accepts=100000&language=nodejs&rpcVer=50400'));
     await server.close();
   });
 

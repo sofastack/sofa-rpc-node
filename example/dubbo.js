@@ -15,15 +15,21 @@ async function invoke() {
     logger,
     registry,
     protocol,
-    group: 'dubbo',
-    version: null,
+    group: 'HSF',
+    version: '1.0.0',
   });
   const consumer = client.createConsumer({
     interfaceName: 'org.apache.dubbo.demo.DemoService',
   });
   await consumer.ready();
 
-  const result = await consumer.invoke('sayHello', [{
+  let result = await consumer.invoke('sayHello', [{
+    $class: 'java.lang.String',
+    $: 'zongyu',
+  }], { responseTimeout: 3000 });
+  console.log(result);
+
+  result = await consumer.invoke('sayHello', [{
     $class: 'java.lang.String',
     $: 'zongyu',
   }], { responseTimeout: 3000 });
