@@ -54,7 +54,7 @@
     "await-event": "^2.1.0",
     "coffee": "^5.1.0",
     "contributors": "^0.5.1",
-    "dubbo-remoting": "^2.1.2",
+    "dubbo-remoting": "^2.1.3",
     "egg-bin": "^4.9.0",
     "eslint": "^5.8.0",
     "eslint-config-egg": "^7.1.0",

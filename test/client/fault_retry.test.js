@@ -46,7 +46,7 @@ describe('test/client/fault_retry.test.js', () => {
 
     setTimeout(() => {
       addressGroup.emit('timeout');
-    }, 9000);
+    }, 8000);
 
     const o = await addressGroup.awaitFirst([ 'retry', 'timeout' ]);
     assert(o.event === 'timeout');

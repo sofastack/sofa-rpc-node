@@ -101,8 +101,8 @@ describe('test/client/loadbalancer.test.js', () => {
       }
       const per = 100000 / count;
       for (let i = 0; i < 20; i++) {
-        assert(per * (i + 1) * 0.85 < cnt.get(9000 + i) &&
-          per * (i + 1) * 1.15 > cnt.get(9000 + i)); // 随机偏差不会太大，应该不超过15%
+        assert(per * (i + 1) * 0.80 < cnt.get(9000 + i) &&
+          per * (i + 1) * 1.20 > cnt.get(9000 + i)); // 随机偏差不会太大，应该不超过20%
       }
     });
   });
