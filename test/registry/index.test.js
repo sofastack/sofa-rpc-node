@@ -195,7 +195,7 @@ describe('test/registry/index.test.js', () => {
         interfaceName: 'org.apache.dubbo.demo.DemoService',
         version: '1.0.0',
         group: 'HSF',
-        url: 'dubbo://127.0.0.1:12200/org.apache.dubbo.demo.DemoService?accepts=100000&appName=&application=demo-consumer&check=false&dubbo=2.0.2&dynamic=true&group=HSF&interface=org.apache.dubbo.demo.DemoService&language=nodejs&methods=sayHello&pid=45510&qos.port=33333&register.ip=192.168.1.13&revision=1.0.0&rpcVer=50400&serialization=hessian2&side=consumer&startTime=1540925808939&timeout=3000&timestamp=1540925836963&uniqueId=&version=1.0.0&weight=100',
+        url: 'dubbo://127.0.0.1:12200/org.apache.dubbo.demo.DemoService?accepts=100000&appName=&application=demo-consumer&check=false&dubbo=2.0.2&dynamic=true&default.group=HSF&interface=org.apache.dubbo.demo.DemoService&language=nodejs&methods=sayHello&pid=45510&qos.port=33333&register.ip=192.168.1.13&revision=1.0.0&rpcVer=50400&serialization=hessian2&side=consumer&startTime=1540925808939&timeout=3000&timestamp=1540925836963&uniqueId=&default.version=1.0.0&weight=100',
       };
       const reg2 = {
         interfaceName: 'org.apache.dubbo.demo.DemoService',
