@@ -1,4 +1,10 @@
 
+1.5.2 / 2018-11-01
+==================
+
+**fixes**
+  * [[`d8186e6`](http://github.com/alipay/sofa-rpc-node/commit/d8186e6b40d8734223e35329ce45baf61cb89cc8)] - fix: fit dubbo url rule (#19) (zōng yǔ <<gxcsoccer@users.noreply.github.com>>)
+
 1.5.1 / 2018-10-31
 ==================
 
