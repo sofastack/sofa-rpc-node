@@ -249,5 +249,55 @@ describe('test/registry/index.test.js', () => {
       await registry.unRegister(reg3);
       await registry.unRegister(reg4);
     });
+
+    it('should filter with interfaceName', async () => {
+      const reg1 = {
+        interfaceName: 'com.alipay.sofa.rpc.test.SimpleService',
+        version: '1.0',
+        group: 'SOFA',
+        url: 'bolt://127.0.0.1:12200?interface=com.alipay.sofa.rpc.test.SimpleService&group=SOFA&version=1.0',
+      };
+      const reg2 = {
+        interfaceName: 'com.alipay.sofa.rpc.test.SimpleService',
+        version: '1.0',
+        group: 'SOFA',
+        url: 'bolt://127.0.0.1:12200?interface=com.alipay.sofa.rpc.test.SimpleService&group=SOFA',
+      };
+      const reg3 = {
+        interfaceName: 'com.alipay.sofa.rpc.test.SimpleService',
+        version: '1.0',
+        group: 'SOFA',
+        url: 'bolt://127.0.0.1:12200?interface=com.alipay.sofa.rpc.test.SimpleService&version=1.0',
+      };
+      registry.register(reg1);
+      registry.register(reg2);
+      registry.register(reg3);
+      await sleep(2000);
+
+      let addressList;
+      const listener = val => {
+        addressList = val;
+        registry.emit('address_update', val);
+      };
+      registry.subscribe({
+        interfaceName: 'com.alipay.sofa.rpc.test.SimpleService',
+        version: '1.0',
+        group: 'SOFA',
+      }, listener);
+
+      await registry.await('address_update');
+
+      registry.unSubscribe({
+        interfaceName: 'com.alipay.sofa.rpc.test.SimpleService',
+        version: '1.0',
+        group: 'SOFA',
+      });
+
+      assert(addressList && addressList.length === 3);
+
+      await registry.unRegister(reg1);
+      await registry.unRegister(reg2);
+      await registry.unRegister(reg3);
+    });
   });
 });
