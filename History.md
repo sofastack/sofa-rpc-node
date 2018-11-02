@@ -1,4 +1,10 @@
 
+1.5.3 / 2018-11-02
+==================
+
+**fixes**
+  * [[`6412d6c`](http://github.com/alipay/sofa-rpc-node/commit/6412d6cc8bc105da33e9c3eb7c59dc00971cbc8c)] - fix: fit sofa-rpc group/version rule (#21) (zōng yǔ <<gxcsoccer@users.noreply.github.com>>)
+
 1.5.2 / 2018-11-01
 ==================
 
