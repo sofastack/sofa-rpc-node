@@ -1,4 +1,10 @@
 
+1.5.4 / 2018-11-06
+==================
+
+**fixes**
+  * [[`53938d8`](http://github.com/alipay/sofa-rpc-node/commit/53938d8620a1b458d22d914ce44ddce11b551dcd)] - fix: service wrong classMap default value (#22) (zōng yǔ <<gxcsoccer@users.noreply.github.com>>)
+
 1.5.3 / 2018-11-02
 ==================
 
