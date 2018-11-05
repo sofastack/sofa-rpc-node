@@ -38,6 +38,7 @@ describe('test/server/service.test.js', () => {
 
     assert(!service.app);
     assert(!service.registry);
+    assert(!service.classMaps);
 
     assert.deepEqual(service.normalizeReg('bolt://127.0.0.1:12200'), {
       interfaceName: 'com.node.test.TestService',
