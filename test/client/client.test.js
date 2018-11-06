@@ -66,4 +66,29 @@ describe('test/client/client.test.js', () => {
 
     await client.close();
   });
+
+  it('should support without registry or serverHost in unittest env', async function() {
+    const client = new RpcClient({
+      protocol,
+      logger,
+      allowMock: true, // 标识当前支持 mock
+    });
+    const consumer = client.createConsumer({
+      interfaceName: 'com.alipay.sofa.rpc.test.ProtoService',
+      targetAppName: 'pb',
+    });
+    await consumer.ready();
+
+    const args = [{
+      name: 'Peter',
+      group: 'A',
+    }];
+    try {
+      await consumer.invoke('echoObj', args);
+      assert(false);
+    } catch (err) {
+      assert(err.name === 'RpcNoProviderError');
+      assert(err.message === 'No provider of com.alipay.sofa.rpc.test.ProtoService:1.0@SOFA:echoObj() found!');
+    }
+  });
 });
