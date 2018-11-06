@@ -1,4 +1,10 @@
 
+1.6.0 / 2018-11-06
+==================
+
+**features**
+  * [[`2499080`](http://github.com/alipay/sofa-rpc-node/commit/2499080b4e0deec4c79f3bac31b2bf9a8d9560bf)] - feat: without registry & serverHost in unittest env (#23) (zōng yǔ <<gxcsoccer@users.noreply.github.com>>)
+
 1.5.4 / 2018-11-06
 ==================
 
