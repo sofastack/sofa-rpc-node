@@ -340,6 +340,7 @@ describe('test/client/connection.test.js', () => {
       assert(res.error.message.includes('this request is block by circuit breaker, HealthCounts'));
 
       await sleep(connection._circuitBreaker.config.sleepWindowInMilliseconds);
+      await sleep(10);
 
       res = await connection.invoke(req);
       assert.deepEqual(res, { error: null, appResponse: 3, responseProps: null });
