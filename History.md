@@ -1,4 +1,10 @@
 
+1.6.1 / 2018-11-28
+==================
+
+**fixes**
+  * [[`038ff1e`](http://github.com/alipay/sofa-rpc-node/commit/038ff1e52a2abbbecf370d810882a39a086c0559)] - fix: should auto recovery from zk disconnected or expired (#27) (zōng yǔ <<gxcsoccer@users.noreply.github.com>>)
+
 1.6.0 / 2018-11-06
 ==================
 
