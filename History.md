@@ -1,4 +1,10 @@
 
+1.6.2 / 2018-12-14
+==================
+
+**fixes**
+  * [[`31798c8`](http://github.com/alipay/sofa-rpc-node/commit/31798c87c0c9bdf72fec0a2ce7b2ab38dc85f518)] - fix: weight adjust bug for invalid address (#29) (zōng yǔ <<gxcsoccer@users.noreply.github.com>>)
+
 1.6.1 / 2018-11-28
 ==================
 
