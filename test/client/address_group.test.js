@@ -57,6 +57,31 @@ describe('test/address_group.test.js', () => {
     }
   });
 
+  it('should not change weight for invalid address', async function() {
+    const addressGroup = new AddressGroup({
+      key: 'yyy',
+      logger,
+      connectionManager,
+    });
+    addressGroup.addressList = [];
+    await addressGroup.ready();
+    addressGroup.addressList = [
+      urlparse('bolt://2.2.2.2:12200', true),
+    ];
+    const debug = logger.debug;
+    let run = false;
+    mm(logger, 'debug', (...args) => {
+      debug.apply(logger, args);
+      if (args[0].includes('total request count: ')) {
+        run = true;
+      }
+    });
+    await addressGroup._healthCounter.await('next');
+
+    assert(!run);
+    addressGroup.close();
+  });
+
   it('保证先建连才会被路由到', async function() {
     await Promise.all([
       utils.startServer(13201),
