@@ -56,7 +56,7 @@
     "contributors": "^0.5.1",
     "dubbo-remoting": "^2.1.3",
     "egg-bin": "^4.9.0",
-    "eslint": "^5.9.0",
+    "eslint": "^5.10.0",
     "eslint-config-egg": "^7.1.0",
     "mm": "^2.4.1",
     "node-zookeeper-client": "^0.2.2",
