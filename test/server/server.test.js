@@ -44,7 +44,7 @@ describe('test/server.test.js', () => {
       logger,
       codecType: 'protobuf',
     });
-    assert(server.url.endsWith('dynamic=true&appName=test&timeout=3000&serialization=protobuf&weight=100&accepts=100000&language=nodejs&rpcVer=50400'));
+    assert(server.url.endsWith('dynamic=true&appName=test&timeout=3000&serialization=protobuf&weight=100&accepts=100000&language=nodejs&rpcVer=50400&protocol='));
     await server.close();
   });
 
@@ -56,7 +56,7 @@ describe('test/server.test.js', () => {
       codecType: 'hessian2',
     });
     assert(server.url.startsWith('dubbo://'));
-    assert(server.url.endsWith('dynamic=true&appName=test&timeout=3000&serialization=hessian2&weight=100&accepts=100000&language=nodejs&rpcVer=50400'));
+    assert(server.url.endsWith('dynamic=true&appName=test&timeout=3000&serialization=hessian2&weight=100&accepts=100000&language=nodejs&rpcVer=50400&protocol=dubbo'));
     await server.close();
   });
 
