@@ -1,6 +1,6 @@
 {
   "name": "sofa-rpc-node",
-  "version": "1.6.2",
+  "version": "1.7.0",
   "description": "SOFARPC Nodejs Implementation",
   "main": "lib/index.js",
   "files": [

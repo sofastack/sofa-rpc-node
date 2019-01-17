@@ -1,4 +1,13 @@
 
+1.7.0 / 2019-01-17
+==================
+
+**features**
+  * [[`0d7428a`](http://github.com/alipay/sofa-rpc-node/commit/0d7428abb24c3852528f07aeb20c8e9dc903842a)] - feat: add protocol name on rpc server url (#32) (zōng yǔ <<gxcsoccer@users.noreply.github.com>>)
+
+**others**
+  * [[`1d74fd2`](http://github.com/alipay/sofa-rpc-node/commit/1d74fd2ffd36c8631108f860255698a973bcf8ea)] - chore: Update issue templates (#30) (zōng yǔ <<gxcsoccer@users.noreply.github.com>>)
+
 1.6.2 / 2018-12-14
 ==================
 
