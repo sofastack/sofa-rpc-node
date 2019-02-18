@@ -18,7 +18,10 @@ async function test() {
     serverHost: 'http://localhost:12200',
   });
   await consumer.ready();
-  const r = await consumer.invoke('SayHello', [{ name: 'peter' }]);
+  const r = await Promise.all([
+    consumer.invoke('SayHello', [{ name: 'peter' }]),
+    consumer.invoke('SayHi', [{ name: 'tony' }]),
+  ]);
   console.log(r);
 }
 
