@@ -1247,7 +1247,7 @@ describe('test/address_group.test.js', () => {
       }
 
       addressGroup = new AddressGroup({
-        key: 'com.alipay.cif.user.UserInfoQueryService:1.0@SOFA@rz00a',
+        key: 'com.alipay.TestQueryService:1.0@SOFA@xxxx',
         logger,
         connectionManager,
         connectionClass: MockConnection,
