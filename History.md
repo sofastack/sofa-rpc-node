@@ -1,4 +1,10 @@
 
+1.8.0 / 2019-02-26
+==================
+
+**others**
+  * [[`61142bb`](http://github.com/alipay/sofa-rpc-node/commit/61142bb876608ada87e180b961008c38dcd13f1f)] - refactor: enhance elastic control of connections (#34) (zōng yǔ <<gxcsoccer@users.noreply.github.com>>)
+
 1.7.0 / 2019-01-17
 ==================
 
