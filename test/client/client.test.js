@@ -41,7 +41,7 @@ describe('test/client/client.test.js', () => {
     });
     client.consumerClass = RpcConsumer;
 
-    const consumer = client.createConsumer({
+    let consumer = client.createConsumer({
       interfaceName: 'com.alipay.sofa.rpc.test.ProtoService',
       targetAppName: 'pb',
       loadbalancerClass: 'consistentHash',
@@ -58,11 +58,20 @@ describe('test/client/client.test.js', () => {
       group: 'A',
     }];
     const ctx = { foo: 'bar' };
-    const res = await consumer.invoke('echoObj', args, { ctx });
+    let res = await consumer.invoke('echoObj', args, { ctx });
     assert.deepEqual(res, { code: 200, message: 'hello Peter, you are in A' });
 
     assert(req && req.targetAppName === 'pb');
     assert(req.ctx === ctx);
+
+    consumer.close();
+
+    consumer = client.createConsumer({
+      interfaceName: 'com.alipay.sofa.rpc.test.ProtoService',
+      targetAppName: 'pb',
+    });
+    res = await consumer.invoke('echoObj', args, { ctx });
+    assert.deepEqual(res, { code: 200, message: 'hello Peter, you are in A' });
 
     await client.close();
   });
