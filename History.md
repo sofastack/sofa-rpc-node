@@ -1,4 +1,13 @@
 
+1.9.0 / 2019-03-06
+==================
+
+**features**
+  * [[`30d014f`](http://github.com/alipay/sofa-rpc-node/commit/30d014f68dc60295e18bce54f14ea6970e10acd5)] - feat: rpc client support middleware (#36) (zōng yǔ <<gxcsoccer@users.noreply.github.com>>)
+
+**fixes**
+  * [[`3c97e0e`](http://github.com/alipay/sofa-rpc-node/commit/3c97e0ebd61f9c29b6d3e3b2e0c4e0052024665a)] - fix: remove singleton instance after consumer close (#35) (zōng yǔ <<gxcsoccer@users.noreply.github.com>>)
+
 1.8.0 / 2019-02-26
 ==================
 
