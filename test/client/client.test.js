@@ -99,5 +99,69 @@ describe('test/client/client.test.js', () => {
       assert(err.name === 'RpcNoProviderError');
       assert(err.message === 'No provider of com.alipay.sofa.rpc.test.ProtoService:1.0@SOFA:echoObj() found!');
     }
+
+    await client.close();
+  });
+
+  it('should support middleware', async function() {
+    const client = new RpcClient({
+      protocol,
+      logger,
+      allowMock: true, // 标识当前支持 mock
+    });
+
+    client.use(async function(ctx, next) {
+      try {
+        await next();
+      } catch (err) {
+        assert(err.name === 'RpcNoProviderError');
+        ctx.body = 'empty';
+      }
+    });
+
+    const consumer = client.createConsumer({
+      interfaceName: 'com.alipay.sofa.rpc.test.ProtoService',
+      targetAppName: 'pb',
+    });
+    await consumer.ready();
+
+    const args = [{
+      name: 'Peter',
+      group: 'A',
+    }];
+    let result = await consumer.invoke('echoObj', args);
+    assert(result === 'empty');
+
+    async function mw1(ctx, next) {
+      const req = ctx.req;
+      assert(req.methodName === 'echoObj');
+
+      await next();
+    }
+
+    async function mw2(ctx, next) {
+      try {
+        await next();
+      } catch (err) {
+        assert(err.name === 'RpcNoProviderError');
+      }
+    }
+
+    client.use([ mw1, mw2 ]);
+
+    result = await consumer.invoke('echoObj', args);
+    assert(!result);
+
+
+    const consumer2 = client.createConsumer({
+      interfaceName: 'com.alipay.sofa.rpc.test.ProtoService2',
+      targetAppName: 'pb',
+    });
+    await consumer2.ready();
+
+    result = await consumer2.invoke('echoObj', []);
+    assert(!result);
+
+    await client.close();
   });
 });

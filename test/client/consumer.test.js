@@ -161,7 +161,7 @@ describe('test/client/consumer.test.js', () => {
       req = val;
     });
     consumer.once('response', val => {
-      assert(val && val.req && !val.res);
+      assert(val && val.req && val.res && !val.res.error && !val.res.appResponse);
     });
     const args = [{
       name: 'Peter',
@@ -410,5 +410,61 @@ describe('test/client/consumer.test.js', () => {
     assert(consumer.logger);
     await consumer.ready();
     assert(consumer.id === 'com.alipay.sofa.rpc.test.ProtoService');
+    consumer.close();
+  });
+
+  it('should support middleware', async function() {
+    const consumer = new RpcConsumer({
+      interfaceName: 'com.alipay.sofa.rpc.test.ProtoService',
+      connectionManager,
+      connectionOpts: {
+        protocol,
+      },
+      registry,
+      logger,
+    });
+    await consumer.ready();
+
+    consumer.use(async function(ctx, next) {
+      const req = ctx.req;
+      assert(req);
+      assert(req.methodName === 'echoObj');
+      assert.deepEqual(req.args, [{
+        name: 'Peter',
+        group: 'A',
+      }]);
+      await next();
+
+      console.log(ctx.body);
+    });
+
+    const args = [{
+      name: 'Peter',
+      group: 'A',
+    }];
+    let res = await consumer.invoke('echoObj', args);
+    assert.deepEqual(res, { code: 200, message: 'hello Peter, you are in A' });
+
+    consumer.use(async function(ctx, next) {
+      await next();
+
+      ctx.body = Object.assign({ xxx: 'yyy' }, ctx.body);
+    });
+
+    res = await consumer.invoke('echoObj', args);
+    assert.deepEqual(res, { code: 200, message: 'hello Peter, you are in A', xxx: 'yyy' });
+
+    consumer.use(async function() {
+      throw new Error('mock error');
+    });
+
+    try {
+      await consumer.invoke('echoObj', args);
+      assert(false);
+    } catch (err) {
+      assert(err.message === 'mock error');
+    }
+
+    consumer.close();
   });
 });
