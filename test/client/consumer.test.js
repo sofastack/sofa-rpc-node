@@ -49,6 +49,7 @@ describe('test/client/consumer.test.js', () => {
       logger,
     });
     assert(consumer.logger);
+    assert(typeof consumer.createContext === 'function');
     await consumer.ready();
     assert(consumer.id === 'com.alipay.sofa.rpc.test.ProtoService:1.0');
     const args = [{
@@ -360,6 +361,7 @@ describe('test/client/consumer.test.js', () => {
     });
     consumer.once('response', val => {
       assert(val && val.req && val.res);
+      assert(val.path === '/rpc/com.alipay.sofa.rpc.test.ProtoService:1.0/echoObj');
       res = val.res;
     });
 
