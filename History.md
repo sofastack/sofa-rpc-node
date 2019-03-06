@@ -1,4 +1,10 @@
 
+1.9.1 / 2019-03-06
+==================
+
+**others**
+  * [[`45e4714`](http://github.com/alipay/sofa-rpc-node/commit/45e4714a1ee2bb169f35dbe9f24f6145316881c1)] - refactor: add consumer.createContext (#37) (zōng yǔ <<gxcsoccer@users.noreply.github.com>>)
+
 1.9.0 / 2019-03-06
 ==================
 
