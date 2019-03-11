@@ -1520,5 +1520,23 @@ describe('test/address_group.test.js', () => {
       assert(addressGroup.addressList.length === 50);
       assert(addressGroup._choosedSize === 50);
     });
+
+    it('弹性控制', () => {
+      mm(addressGroup, 'connectionPoolConfig', null);
+      assert(!addressGroup._needElasticControl(100));
+      assert(!addressGroup._needElasticControl(10));
+
+      mm.restore();
+
+      mm(addressGroup.connectionPoolConfig, 'minAddressCount', 10);
+      assert(!addressGroup._needElasticControl(9));
+      assert(!addressGroup._needElasticControl(2));
+
+      mm(addressGroup.connectionPoolConfig, 'enableThreshold', 50);
+
+      assert(addressGroup._needElasticControl(51));
+      assert(!addressGroup._needElasticControl(50));
+      assert(!addressGroup._needElasticControl(49));
+    });
   });
 });
