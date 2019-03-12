@@ -1,4 +1,10 @@
 
+1.10.0 / 2019-03-12
+==================
+
+**features**
+  * [[`b0a21ae`](http://github.com/alipay/sofa-rpc-node/commit/b0a21ae0f694bb468193e1d1ee20fe25879f08dd)] - feat: add an enableThreshold for connectionPoolConfig (#39) (zōng yǔ <<gxcsoccer@users.noreply.github.com>>)
+
 1.9.1 / 2019-03-06
 ==================
 
