@@ -56,10 +56,10 @@
     "coffee": "^5.2.1",
     "contributors": "^0.5.1",
     "dubbo-remoting": "^2.1.4",
-    "egg-bin": "^4.11.0",
+    "egg-bin": "^4.11.1",
     "eslint": "^5.15.1",
-    "eslint-config-egg": "^7.1.0",
-    "mm": "^2.4.1",
+    "eslint-config-egg": "^7.2.0",
+    "mm": "^2.5.0",
     "node-zookeeper-client": "^0.2.2",
     "pedding": "^1.1.0"
   },
@@ -68,6 +68,6 @@
   },
   "ci": {
     "type": "travis",
-    "version": "8, 10"
+    "version": "8, 10, 11"
   }
 }

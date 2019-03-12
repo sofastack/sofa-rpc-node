@@ -13,7 +13,7 @@ const logger = console;
 describe('test/client/elastic_control.test.js', () => {
   let connectionManager;
   let addressGroup;
-  const count = 10;
+  const count = 51;
 
   const addressList = [];
 
@@ -52,13 +52,13 @@ describe('test/client/elastic_control.test.js', () => {
     assert(addressGroup.addressList.length === 2);
     mm(utils, 'shuffle', arr => arr);
 
-    const newAddress = urlparse('rpc://127.0.0.11:12200');
+    const newAddress = urlparse('rpc://127.0.0.52:12200');
     MockConnection.addAvailableAddress(newAddress);
 
     const newAddressList = [ newAddress ].concat(addressList);
     addressGroup.addressList = newAddressList;
 
     assert(addressGroup.addressList.length === 2);
-    assert(addressGroup.addressList[0].href === 'rpc://127.0.0.11:12200');
+    assert(addressGroup.addressList[0].href === 'rpc://127.0.0.52:12200');
   });
 });
