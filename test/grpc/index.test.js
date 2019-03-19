@@ -21,16 +21,28 @@ describe('test/grpc/index.test.js', () => {
       logger,
       port,
     });
-    server.addService({
-      interfaceName: 'helloworld.Greeter',
-    }, {
-      async SayHello(req) {
-        await sleep(200);
-        return {
-          message: `hello ${req.name}`,
-        };
+    server.addService(
+      {
+        interfaceName: 'helloworld.Greeter',
       },
-    });
+      {
+        async SayHello(req) {
+          await sleep(200);
+          return {
+            message: `hello ${req.name}`,
+          };
+        },
+        async SayHi(req) {
+          await sleep(100);
+          if (req.name === 'throw') {
+            throw new Error('test error message');
+          }
+          return {
+            message: `hi ${req.name}`,
+          };
+        },
+      }
+    );
     await server.start();
     client = new GRpcClient({
       proto,
@@ -84,5 +96,35 @@ describe('test/grpc/index.test.js', () => {
       .service('helloworld.Greeter')
       .invoke('SayHello', { name: 'world' })
       .expect({ message: 'hello world' });
+  });
+
+  it('should invoke gRPC multi times works fine', async function() {
+    const helloResult = await request(server)
+      .service('helloworld.Greeter')
+      .invoke('SayHello', { name: 'world' });
+    helloResult.consumer.close();
+    assert.deepEqual(helloResult.data, { message: 'hello world' });
+    const hiResult = await request(server)
+      .service('helloworld.Greeter')
+      .invoke('SayHi', { name: 'world' });
+    hiResult.consumer.close();
+    assert.deepEqual(hiResult.data, { message: 'hi world' });
+  });
+
+  it('should close connection when service throw exception', async function() {
+    const consumer = client.createConsumer({
+      interfaceName: 'helloworld.Greeter',
+      serverHost: 'http://localhost:' + port,
+    });
+    await consumer.ready();
+    try {
+      await consumer.invoke('SayHi', [{ name: 'throw' }], {});
+      assert(false);
+    } catch (e) {
+      assert(e.name === 'Error [ERR_HTTP2_STREAM_ERROR]');
+      assert(e.message.includes('NGHTTP2_INTERNAL_ERROR'));
+    } finally {
+      consumer.close();
+    }
   });
 });

@@ -413,7 +413,7 @@ describe('test/test/index.test.js', () => {
             assert(false, 'should no run here');
           })
           .catch(err => {
-            assert(err.message === 'Error: mock error');
+            assert(err.message.includes('Error: mock error'));
           });
       });
     });
