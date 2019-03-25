@@ -3,19 +3,12 @@
 const mm = require('mm');
 const assert = require('assert');
 const sleep = require('mz-modules/sleep');
-const ZookeeperClient = require('zookeeper-cluster-client/lib/api_client');
 const ZookeeperRegistry = require('../../lib/registry/zk/data_client');
 
 const cluster = function(clazz, options = {}) {
   options.port = 7778;
+  options.singleMode = false;
   return require('cluster-client')(clazz, options);
-};
-const zookeeper = {};
-zookeeper.createClient = (connectionString, options) => {
-  options = options || {};
-  options.connectionString = connectionString || 'localhost:2181';
-  options.cluster = cluster;
-  return new ZookeeperClient(options);
 };
 const logger = console;
 const innerClient = Symbol.for('ClusterClient#innerClient');
@@ -27,7 +20,7 @@ describe('test/registry/edge_case.test.js', () => {
     this.timeout(60000);
     const registry = new ZookeeperRegistry({
       logger,
-      zookeeper,
+      cluster,
       address: '127.0.0.1:2181',
     });
     await registry.ready();
@@ -72,7 +65,7 @@ describe('test/registry/edge_case.test.js', () => {
     });
 
     await registry.await('connected');
-    await sleep(1000);
+    await sleep(3000);
 
     registry.subscribe({
       interfaceName,
