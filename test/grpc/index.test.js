@@ -111,7 +111,7 @@ describe('test/grpc/index.test.js', () => {
     assert.deepEqual(hiResult.data, { message: 'hi world' });
   });
 
-  it('should close connection when service throw exception', async function() {
+  it('should get error response when service throw exception', async function() {
     const consumer = client.createConsumer({
       interfaceName: 'helloworld.Greeter',
       serverHost: 'http://localhost:' + port,
@@ -121,8 +121,8 @@ describe('test/grpc/index.test.js', () => {
       await consumer.invoke('SayHi', [{ name: 'throw' }], {});
       assert(false);
     } catch (e) {
-      assert(e.name === 'Error [ERR_HTTP2_STREAM_ERROR]');
-      assert(e.message.includes('NGHTTP2_INTERNAL_ERROR'));
+      assert(e.code === 2);
+      assert(e.message === 'test error message');
     } finally {
       consumer.close();
     }
