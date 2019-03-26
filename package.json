@@ -46,21 +46,19 @@
     "sdk-base": "^3.5.1",
     "sofa-bolt-node": "^1.1.1",
     "urlencode": "^1.1.0",
-    "utility": "^1.15.0",
-    "zookeeper-cluster-client": "^2.0.1"
+    "utility": "^1.16.1",
+    "zookeeper-cluster-client": "^3.0.0"
   },
   "devDependencies": {
     "antpb": "^1.0.0",
     "autod": "^3.0.1",
-    "await-event": "^2.1.0",
     "coffee": "^5.2.1",
     "contributors": "^0.5.1",
     "dubbo-remoting": "^2.1.4",
-    "egg-bin": "^4.11.1",
-    "eslint": "^5.15.1",
-    "eslint-config-egg": "^7.2.0",
+    "egg-bin": "^4.12.1",
+    "eslint": "^5.15.3",
+    "eslint-config-egg": "^7.3.0",
     "mm": "^2.5.0",
-    "node-zookeeper-client": "^0.2.2",
     "pedding": "^1.1.0"
   },
   "engines": {
