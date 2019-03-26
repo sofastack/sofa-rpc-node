@@ -1,4 +1,13 @@
 
+1.11.0 / 2019-03-27
+==================
+
+**fixes**
+  * [[`cd54a3a`](http://github.com/alipay/sofa-rpc-node/commit/cd54a3a8be55aebd12cf7b0e086db8ef898f2d6b)] - fix: zk registry bug (#41) (zōng yǔ <<gxcsoccer@users.noreply.github.com>>)
+
+**others**
+  * [[`2439e1e`](http://github.com/alipay/sofa-rpc-node/commit/2439e1e0dca1065e0c328e4b8168f405ae2618cb)] - fix grpc bugs (#40) (zl <<1183163+smile21@users.noreply.github.com>>)
+
 1.10.0 / 2019-03-12
 ==================
 
