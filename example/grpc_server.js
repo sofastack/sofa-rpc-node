@@ -22,6 +22,12 @@ server.addService({
       message: `hello ${req.name} from sofa-rpc-node`,
     };
   },
+  async SayHi(req) {
+    console.log(req);
+    return {
+      message: `hi ${req.name} from sofa-rpc-node`,
+    };
+  },
 });
 
 server.start();

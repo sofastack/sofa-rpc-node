@@ -389,7 +389,7 @@ describe('test/client/consumer.test.js', () => {
     assert(!req.meta.crcEnable);
     assert(req.meta.timeout === 3000);
     assert(req.meta.reqSize === 271);
-    assert(req.meta.resSize === 113);
+    assert(req.meta.resSize === 112);
     assert(req.meta.rt >= 0);
 
     assert(res && res.error && res.error.message.includes('mock error'));
