@@ -1,4 +1,10 @@
 
+1.12.0 / 2019-04-18
+==================
+
+**others**
+  * [[`905d628`](http://github.com/alipay/sofa-rpc-node/commit/905d62800cf0136ef16e52fbffee02264313f0da)] - refactor: quick ready not wait for connection (#43) (zōng yǔ <<gxcsoccer@users.noreply.github.com>>)
+
 1.11.0 / 2019-03-27
 ==================
 
