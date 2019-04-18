@@ -51,13 +51,13 @@
   },
   "devDependencies": {
     "antpb": "^1.0.0",
-    "autod": "^3.0.1",
+    "autod": "^3.1.0",
     "coffee": "^5.2.1",
     "contributors": "^0.5.1",
     "dubbo-remoting": "^2.1.4",
-    "egg-bin": "^4.12.1",
-    "eslint": "^5.15.3",
-    "eslint-config-egg": "^7.3.0",
+    "egg-bin": "^4.12.3",
+    "eslint": "^5.16.0",
+    "eslint-config-egg": "^7.3.1",
     "mm": "^2.5.0",
     "pedding": "^1.1.0"
   },

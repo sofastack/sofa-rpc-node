@@ -27,21 +27,21 @@ describe('test/server/connection.test.js', () => {
     testObj2: { name: 'xxx', finalField: 'xxx' },
     testEnum: { name: 'B' },
     testEnum2: [{ name: 'B' }, { name: 'C' }],
-    bs: new Buffer([ 0x02, 0x00, 0x01, 0x07 ]),
+    bs: Buffer.from([ 0x02, 0x00, 0x01, 0x07 ]),
     list1: [{ name: 'A' }, { name: 'B' }],
     list2: [ 2017, 2016 ],
     list3: [{ name: 'aaa', finalField: 'xxx' },
       { name: 'bbb', finalField: 'xxx' },
     ],
     list4: [ 'xxx', 'yyy' ],
-    list5: [ new Buffer([ 0x02, 0x00, 0x01, 0x07 ]), new Buffer([ 0x02, 0x00, 0x01, 0x06 ]) ],
+    list5: [ Buffer.from([ 0x02, 0x00, 0x01, 0x07 ]), Buffer.from([ 0x02, 0x00, 0x01, 0x06 ]) ],
     map1: { 2017: { name: 'B' } },
     map2: new Map([
       [ 2107, 2016 ],
     ]),
     map3: {},
     map4: { xxx: 'yyy' },
-    map5: { 2017: new Buffer([ 0x02, 0x00, 0x01, 0x06 ]) },
+    map5: { 2017: Buffer.from([ 0x02, 0x00, 0x01, 0x06 ]) },
   };
 
   beforeEach(async function() {
@@ -170,7 +170,7 @@ describe('test/server/connection.test.js', () => {
       assert(msg === '[RpcConnection] error occured on socket: %s, errName: %s, errMsg: %s');
     });
 
-    clientSocket.write(new Buffer('hello world++++++++++++++++++++++++++++++++'));
+    clientSocket.write(Buffer.from('hello world++++++++++++++++++++++++++++++++'));
 
     await connection.await('close');
   });
