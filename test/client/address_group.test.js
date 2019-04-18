@@ -35,7 +35,7 @@ describe('test/address_group.test.js', () => {
     timeout: 3000,
   });
 
-  it('ready failed', async function() {
+  it('should ready even if _connectAll failed', async function() {
     const addressGroup = new AddressGroup({
       key: 'xxx',
       logger,
@@ -49,12 +49,38 @@ describe('test/address_group.test.js', () => {
       urlparse('bolt://127.0.0.1:13202', true),
       urlparse('bolt://2.2.2.2:12200', true),
     ];
+
     try {
       await addressGroup.ready();
-      assert(false);
     } catch (err) {
       assert(err.message === '123');
     }
+    await addressGroup.close();
+  });
+
+  it('should ready even if _connectAll failed', async function() {
+    const addressGroup = new AddressGroup({
+      key: 'xxx',
+      logger,
+      connectionManager,
+      waitConnect: false,
+    });
+    mm(addressGroup, '_connectAll', () => {
+      return Promise.reject(new Error('123'));
+    });
+    addressGroup.addressList = [
+      urlparse('bolt://127.0.0.1:13201', true),
+      urlparse('bolt://127.0.0.1:13202', true),
+      urlparse('bolt://2.2.2.2:12200', true),
+    ];
+    await addressGroup.ready();
+
+    try {
+      await addressGroup.await('error');
+    } catch (err) {
+      assert(err.message === '123');
+    }
+    await addressGroup.close();
   });
 
   it('should not change weight for invalid address', async function() {
