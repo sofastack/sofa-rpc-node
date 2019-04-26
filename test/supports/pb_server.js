@@ -16,6 +16,7 @@ const registry = new ZookeeperRegistry({
 });
 
 let server;
+let count = 0;
 
 exports.start = async function() {
   server = new RpcServer({
@@ -39,6 +40,10 @@ exports.start = async function() {
         message: 'hello ' + req.name + ', you are in ' + req.group,
       };
     },
+
+    async incr(req) {
+      count += req.count;
+    },
   });
   await server.start();
   await server.publish();
@@ -47,4 +52,8 @@ exports.start = async function() {
 
 exports.close = async function() {
   await server.close();
+};
+
+exports.getCount = function() {
+  return count;
 };

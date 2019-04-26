@@ -5,6 +5,7 @@ const path = require('path');
 const antpb = require('antpb');
 const assert = require('assert');
 const protocol = require('sofa-bolt-node');
+const sleep = require('mz-modules/sleep');
 const RpcConsumer = require('../..').client.RpcConsumer;
 const RpcConnectionMgr = require('../..').client.RpcConnectionMgr;
 const ZookeeperRegistry = require('../../').registry.ZookeeperRegistry;
@@ -72,6 +73,43 @@ describe('test/client/consumer.test.js', () => {
     }
     console.log(total, total / 1000);
     consumer.close();
+  });
+
+  it('should oneway ok', async function() {
+    const consumer = new RpcConsumer({
+      interfaceName: 'com.alipay.sofa.rpc.test.ProtoService',
+      loadbalancerClass: 'random',
+      connectionManager,
+      connectionOpts: {
+        protocol,
+      },
+      registry,
+      logger,
+    });
+    assert(consumer.logger);
+    assert(typeof consumer.createContext === 'function');
+    await consumer.ready();
+    assert(consumer.id === 'com.alipay.sofa.rpc.test.ProtoService:1.0');
+    const args = [{
+      count: 2,
+    }];
+
+    let count = 10;
+    let total = 0;
+    while (count--) {
+      const start = Date.now();
+      try {
+        await consumer.invoke('incr', args, { oneway: true });
+      } catch (err) {
+        console.log(err);
+      }
+      const rt = Date.now() - start;
+      total += rt;
+    }
+    console.log(total, total / 1000);
+    consumer.close();
+    await sleep(1);
+    assert(server.getCount() === 20);
   });
 
   it('should invoke ok before ready', async function() {
