@@ -127,4 +127,14 @@ describe('test/grpc/index.test.js', () => {
       consumer.close();
     }
   });
+
+  it('should invoke large request body ok', async function() {
+    const consumer = client.createConsumer({
+      interfaceName: 'helloworld.Greeter',
+      serverHost: 'http://localhost:' + port,
+    });
+    await consumer.ready();
+    const largeStr = Buffer.alloc(100 * 1024);
+    await consumer.invoke('SayHi', [{ name: largeStr.toString() }], {});
+  });
 });
