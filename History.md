@@ -1,4 +1,10 @@
 
+1.12.1 / 2019-05-06
+==================
+
+**fixes**
+  * [[`e800e19`](http://github.com/alipay/sofa-rpc-node/commit/e800e193726095f04993827c90c60b189e911d70)] - fix: grpc server crashes down when receives large request body (#45) (RabbitSion <<rabbitsion@gmail.com>>)
+
 1.12.0 / 2019-04-18
 ==================
 
