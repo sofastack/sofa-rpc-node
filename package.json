@@ -31,7 +31,7 @@
   },
   "homepage": "https://github.com/alipay/sofa-rpc-node#readme",
   "dependencies": {
-    "address": "^1.0.3",
+    "address": "^1.1.0",
     "await-event": "^2.1.0",
     "await-first": "^1.0.0",
     "byte": "^2.0.0",
@@ -43,7 +43,7 @@
     "koa-compose": "^4.1.0",
     "mz-modules": "^2.1.0",
     "pump": "^3.0.0",
-    "sdk-base": "^3.5.1",
+    "sdk-base": "^3.6.0",
     "sofa-bolt-node": "^1.1.1",
     "urlencode": "^1.1.0",
     "utility": "^1.16.1",
@@ -55,9 +55,9 @@
     "coffee": "^5.2.1",
     "contributors": "^0.5.1",
     "dubbo-remoting": "^2.1.4",
-    "egg-bin": "^4.12.3",
+    "egg-bin": "^4.13.0",
     "eslint": "^5.16.0",
-    "eslint-config-egg": "^7.3.1",
+    "eslint-config-egg": "^7.4.1",
     "mm": "^2.5.0",
     "pedding": "^1.1.0"
   },
@@ -66,6 +66,6 @@
   },
   "ci": {
     "type": "travis",
-    "version": "8, 10, 11"
+    "version": "8, 10, 12"
   }
 }

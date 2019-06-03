@@ -3,7 +3,6 @@
 const mm = require('mm');
 const assert = require('assert');
 const urlparse = require('url').parse;
-const utils = require('../../lib/client/utils');
 const MockConnection = require('../fixtures/mock_connection');
 const AddressGroup = require('../../lib/client/address_group');
 const ConnectionManager = require('../../lib/client/connection_mgr');
@@ -50,7 +49,7 @@ describe('test/client/elastic_control.test.js', () => {
 
   it('should use new address', () => {
     assert(addressGroup.addressList.length === 2);
-    mm(utils, 'shuffle', arr => arr);
+    mm(addressGroup._loadbalancer, '_sortAddresses', arr => arr);
 
     const newAddress = urlparse('rpc://127.0.0.52:12200');
     MockConnection.addAvailableAddress(newAddress);
