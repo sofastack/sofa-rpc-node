@@ -1,4 +1,10 @@
 
+1.13.0 / 2019-06-04
+==================
+
+**others**
+  * [[`fb29b09`](http://github.com/alipay/sofa-rpc-node/commit/fb29b09ad5f71fada3938aa35f2f1364cff76602)] - refactor: choose addresses in loadbalancer (#49) (zōng yǔ <<gxcsoccer@users.noreply.github.com>>)
+
 1.12.1 / 2019-05-06
 ==================
 
