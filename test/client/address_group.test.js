@@ -13,7 +13,7 @@ const RpcRequest = require('../../').client.RpcRequest;
 const utils = require('../utils');
 const logger = console;
 
-describe('test/address_group.test.js', () => {
+describe('test/client/address_group.test.js', () => {
   let connectionManager;
   before(() => {
     connectionManager = new ConnectionManager({ logger });
@@ -73,13 +73,13 @@ describe('test/address_group.test.js', () => {
       urlparse('bolt://127.0.0.1:13202', true),
       urlparse('bolt://2.2.2.2:12200', true),
     ];
-    await addressGroup.ready();
 
     try {
       await addressGroup.await('error');
     } catch (err) {
-      assert(err.message === '123');
+      assert(err && err.message === '123');
     }
+    await addressGroup.ready();
     await addressGroup.close();
   });
 
@@ -308,6 +308,7 @@ describe('test/address_group.test.js', () => {
 
     beforeEach(async function() {
       mm(DynamicConfig.instance.connectionPoolConfig, 'elasticControl', false);
+      mm(DynamicConfig.instance.faultTolerance, 'leastWindowRtMultiple', 3);
       mm(DynamicConfig.instance.metric, 'numBuckets', 5);
       mm(DynamicConfig.instance.metric, 'bucketSizeInMs', 100);
 
@@ -1264,6 +1265,7 @@ describe('test/address_group.test.js', () => {
     beforeEach(async function() {
       mm(DynamicConfig.instance.metric, 'numBuckets', 5);
       mm(DynamicConfig.instance.metric, 'bucketSizeInMs', 100);
+      mm(DynamicConfig.instance.faultTolerance, 'leastWindowRtMultiple', 3);
 
       addressList = [];
       for (let i = 0; i < count; i++) {
@@ -1302,10 +1304,9 @@ describe('test/address_group.test.js', () => {
     it('各属性值赋值正确', () => {
       assert(addressGroup._allAddressList.length === count);
       assert(addressGroup._allAddressList === addressList);
-      assert(addressGroup._totalSize === count);
-      assert(addressGroup._choosedSize === 6);
+      assert(addressGroup.totalSize === count);
+      assert(addressGroup.choosedSize === 6);
       assert(addressGroup.addressList.length === 6);
-      assert(addressGroup._unChoosedAddressList.length === count - 6);
 
       for (const address of addressGroup.addressList) {
         assert(addressGroup._weightMap.has(address.host));
@@ -1322,16 +1323,16 @@ describe('test/address_group.test.js', () => {
         urlparse('bolt://127.0.0.1:12200', true),
         urlparse('bolt://127.0.0.2:12200', true),
         urlparse('bolt://127.0.0.3:12200', true),
+        urlparse('bolt://127.0.0.4:12200', true),
       ];
 
       addressGroup.addressList = addressList;
 
-      assert(addressGroup._allAddressList.length === 4);
+      assert(addressGroup._allAddressList.length === 5);
       assert(addressGroup._allAddressList === addressList);
-      assert(addressGroup._totalSize === 4);
-      assert(addressGroup._choosedSize === 4);
-      assert(addressGroup.addressList.length === 4);
-      assert(addressGroup._unChoosedAddressList.length === 0);
+      assert(addressGroup.totalSize === 5);
+      assert(addressGroup.choosedSize === 5);
+      assert(addressGroup.addressList.length === 5);
       for (const address of addressList) {
         assert(addressGroup._weightMap.has(address.host));
         assert(addressGroup._weightMap.get(address.host) === 100);
@@ -1344,17 +1345,13 @@ describe('test/address_group.test.js', () => {
         urlparse('bolt://127.0.0.1:12200', true),
         urlparse('bolt://127.0.0.2:12200', true),
         urlparse('bolt://127.0.0.3:12200', true),
-        urlparse('bolt://127.0.0.4:12200', true),
       ];
-
       addressGroup.addressList = addressList;
-
-      assert(addressGroup._allAddressList.length === 5);
+      assert(addressGroup._allAddressList.length === 4);
       assert(addressGroup._allAddressList === addressList);
-      assert(addressGroup._totalSize === 5);
-      assert(addressGroup._choosedSize === 5);
-      assert(addressGroup.addressList.length === 5);
-      assert(addressGroup._unChoosedAddressList.length === 0);
+      assert(addressGroup.totalSize === 4);
+      assert(addressGroup.choosedSize === 4);
+      assert(addressGroup.addressList.length === 4);
       for (const address of addressList) {
         assert(addressGroup._weightMap.has(address.host));
         assert(addressGroup._weightMap.get(address.host) === 100);
@@ -1363,13 +1360,12 @@ describe('test/address_group.test.js', () => {
       assert(addressGroup._degradeEnable);
     });
 
-    it('_refresh() 之后启用的地址尽量是已经连上的地址', () => {
+    it('refresh() 之后启用的地址尽量是已经连上的地址', () => {
       assert(addressGroup._allAddressList.length === count);
       assert(addressGroup._allAddressList === addressList);
-      assert(addressGroup._totalSize === count);
-      assert(addressGroup._choosedSize === 6);
+      assert(addressGroup.totalSize === count);
+      assert(addressGroup.choosedSize === 6);
       assert(addressGroup.addressList.length === 6);
-      assert(addressGroup._unChoosedAddressList.length === count - 6);
 
       const preAddressMap = new Set();
       for (const address of addressGroup.addressList) {
@@ -1381,14 +1377,13 @@ describe('test/address_group.test.js', () => {
       assert(addressGroup._faultAddressMap.size === 0);
       assert(addressGroup._degradeEnable);
 
-      addressGroup._refresh();
+      addressGroup.refresh();
 
       assert(addressGroup._allAddressList.length === count);
       assert(addressGroup._allAddressList === addressList);
-      assert(addressGroup._totalSize === count);
-      assert(addressGroup._choosedSize === 6);
+      assert(addressGroup.totalSize === count);
+      assert(addressGroup.choosedSize === 6);
       assert(addressGroup.addressList.length === 6);
-      assert(addressGroup._unChoosedAddressList.length === count - 6);
 
       for (const address of addressGroup.addressList) {
         assert(addressGroup._weightMap.has(address.host));
@@ -1409,10 +1404,9 @@ describe('test/address_group.test.js', () => {
 
       assert(addressGroup._allAddressList.length === count);
       assert(addressGroup._allAddressList === addressList);
-      assert(addressGroup._totalSize === count);
-      assert(addressGroup._choosedSize === count - 1);
+      assert(addressGroup.totalSize === count);
+      assert(addressGroup.choosedSize === count - 1);
       assert(addressGroup.addressList.length === count - 1);
-      assert(addressGroup._unChoosedAddressList.length === 1);
 
       for (const address of addressGroup.addressList) {
         assert(addressGroup._weightMap.has(address.host));
@@ -1428,10 +1422,9 @@ describe('test/address_group.test.js', () => {
 
       assert(addressGroup._allAddressList.length === count);
       assert(addressGroup._allAddressList === addressList);
-      assert(addressGroup._totalSize === count);
-      assert(addressGroup._choosedSize === count - 2);
+      assert(addressGroup.totalSize === count);
+      assert(addressGroup.choosedSize === count - 2);
       assert(addressGroup.addressList.length === count - 2);
-      assert(addressGroup._unChoosedAddressList.length === 2);
 
       for (const address of addressGroup.addressList) {
         assert(addressGroup._weightMap.has(address.host));
@@ -1447,10 +1440,9 @@ describe('test/address_group.test.js', () => {
 
       assert(addressGroup._allAddressList.length === count);
       assert(addressGroup._allAddressList === addressList);
-      assert(addressGroup._totalSize === count);
-      assert(addressGroup._choosedSize === count);
+      assert(addressGroup.totalSize === count);
+      assert(addressGroup.choosedSize === count);
       assert(addressGroup.addressList.length === count);
-      assert(addressGroup._unChoosedAddressList.length === 0);
 
       for (const address of addressGroup.addressList) {
         assert(addressGroup._weightMap.has(address.host));
@@ -1471,10 +1463,9 @@ describe('test/address_group.test.js', () => {
 
       assert(addressGroup._allAddressList.length === count);
       assert(addressGroup._allAddressList === addressList);
-      assert(addressGroup._totalSize === count);
-      assert(addressGroup._choosedSize === 50);
+      assert(addressGroup.totalSize === count);
+      assert(addressGroup.choosedSize === 50);
       assert(addressGroup.addressList.length === 50);
-      assert(addressGroup._unChoosedAddressList.length === count - 50);
 
       for (const address of addressGroup.addressList) {
         assert(addressGroup._weightMap.has(address.host));
@@ -1501,7 +1492,7 @@ describe('test/address_group.test.js', () => {
       await addressGroup._healthCounter.await('next');
       assert(addressGroup.connectionPoolSize === 10);
       assert(addressGroup.addressList.length === 10);
-      assert(addressGroup._choosedSize === 10);
+      assert(addressGroup.choosedSize === 10);
 
       for (let i = 0; i < 30 * 10; i++) {
         const connection = await addressGroup.getConnection(req);
@@ -1515,7 +1506,7 @@ describe('test/address_group.test.js', () => {
       await addressGroup._healthCounter.await('next');
       assert(addressGroup.connectionPoolSize === 20);
       assert(addressGroup.addressList.length === 20);
-      assert(addressGroup._choosedSize === 20);
+      assert(addressGroup.choosedSize === 20);
 
 
       await addressGroup._healthCounter.await('next');
@@ -1525,12 +1516,12 @@ describe('test/address_group.test.js', () => {
 
       assert(addressGroup.connectionPoolSize === 10);
       assert(addressGroup.addressList.length === 10);
-      assert(addressGroup._choosedSize === 10);
+      assert(addressGroup.choosedSize === 10);
 
       await addressGroup._healthCounter.await('next');
       assert(addressGroup.connectionPoolSize === 5);
       assert(addressGroup.addressList.length === 5);
-      assert(addressGroup._choosedSize === 5);
+      assert(addressGroup.choosedSize === 5);
 
       for (let i = 0; i < 30 * 51; i++) {
         const connection = await addressGroup.getConnection(req);
@@ -1544,25 +1535,25 @@ describe('test/address_group.test.js', () => {
       await addressGroup._healthCounter.await('next');
       assert(addressGroup.connectionPoolSize === 50);
       assert(addressGroup.addressList.length === 50);
-      assert(addressGroup._choosedSize === 50);
+      assert(addressGroup.choosedSize === 50);
     });
 
     it('弹性控制', () => {
       mm(addressGroup, 'connectionPoolConfig', null);
-      assert(!addressGroup._needElasticControl(100));
-      assert(!addressGroup._needElasticControl(10));
+      assert(!addressGroup._loadbalancer._needElasticControl(100));
+      assert(!addressGroup._loadbalancer._needElasticControl(10));
 
       mm.restore();
 
       mm(addressGroup.connectionPoolConfig, 'minAddressCount', 10);
-      assert(!addressGroup._needElasticControl(9));
-      assert(!addressGroup._needElasticControl(2));
+      assert(!addressGroup._loadbalancer._needElasticControl(9));
+      assert(!addressGroup._loadbalancer._needElasticControl(2));
 
       mm(addressGroup.connectionPoolConfig, 'enableThreshold', 50);
 
-      assert(addressGroup._needElasticControl(51));
-      assert(!addressGroup._needElasticControl(50));
-      assert(!addressGroup._needElasticControl(49));
+      assert(addressGroup._loadbalancer._needElasticControl(51));
+      assert(!addressGroup._loadbalancer._needElasticControl(50));
+      assert(!addressGroup._loadbalancer._needElasticControl(49));
     });
   });
 });

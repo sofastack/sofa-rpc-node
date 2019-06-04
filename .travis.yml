@@ -3,6 +3,7 @@ language: node_js
 node_js:
   - '8'
   - '10'
+  - '12'
 before_install:
   - 'wget https://archive.apache.org/dist/zookeeper/zookeeper-3.4.6/zookeeper-3.4.6.tar.gz'
   - 'tar xf zookeeper-3.4.6.tar.gz'
