@@ -1,4 +1,10 @@
 
+1.14.0 / 2019-06-19
+==================
+
+**features**
+  * [[`0ba7c9f`](http://github.com/alipay/sofa-rpc-node/commit/0ba7c9f068720b9cbc3dac01bcc88dfa46b90793)] - feat: support zk registry to config acl (#52) (zōng yǔ <<gxcsoccer@users.noreply.github.com>>)
+
 1.13.0 / 2019-06-04
 ==================
 
