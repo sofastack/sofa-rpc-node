@@ -47,7 +47,7 @@
     "sofa-bolt-node": "^1.1.1",
     "urlencode": "^1.1.0",
     "utility": "^1.16.1",
-    "zookeeper-cluster-client": "^3.0.0"
+    "zookeeper-cluster-client": "^3.1.0"
   },
   "devDependencies": {
     "antpb": "^1.0.0",
@@ -59,6 +59,7 @@
     "eslint": "^5.16.0",
     "eslint-config-egg": "^7.4.1",
     "mm": "^2.5.0",
+    "node-zookeeper-client": "^1.0.0",
     "pedding": "^1.1.0"
   },
   "engines": {
