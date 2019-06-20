@@ -1,12 +1,14 @@
 'use strict';
 
 const mm = require('mm');
+const net = require('net');
 const assert = require('assert');
 const sleep = require('mz-modules/sleep');
 const request = require('../../').test;
 const dubboProtocol = require('dubbo-remoting');
 const RpcClient = require('../../').client.RpcClient;
 const RpcServer = require('../../').server.RpcServer;
+const protocol = require('sofa-bolt-node/lib/protocol');
 const ZookeeperRegistry = require('../../').registry.ZookeeperRegistry;
 
 const logger = console;
@@ -59,6 +61,51 @@ describe('test/server.test.js', () => {
     assert(server.url.endsWith('dynamic=true&appName=test&timeout=3000&serialization=hessian2&weight=100&accepts=100000&language=nodejs&rpcVer=50400&protocol=dubbo'));
     await server.close();
   });
+
+  it('should handleRequest error', async () => {
+    server = new RpcServer({
+      appName: 'test',
+      registry,
+      logger,
+    });
+    await server.start();
+
+    const buf = protocol.requestEncode(1, {
+      serverSignature: null,
+      methodName: 'foo',
+      targetAppName: 'test',
+      args: [],
+      timeout: 3000,
+    }, {
+      protocolType: 'bolt',
+      codecType: 'hessian2',
+      boltVersion: 1,
+      sofaVersion: '',
+      crcEnable: false,
+    });
+    const socket = net.connect(12200, '127.0.0.1');
+    socket.write(buf);
+
+    try {
+      await server.await('error');
+    } catch (err) {
+      console.log(err);
+      assert(err.message.includes('Cannot read property \'split\' of null'));
+      assert(err.req);
+      assert(err.req.packetId === 1);
+      assert.deepEqual(err.req.data, {
+        methodName: 'foo',
+        serverSignature: null,
+        args: [],
+        methodArgSigs: [],
+        requestProps: null,
+        targetAppName: 'test',
+      });
+    }
+    socket.destroy();
+    await server.close();
+  });
+
 
   describe('bolt', () => {
     before(async function() {
