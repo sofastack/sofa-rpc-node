@@ -1,4 +1,10 @@
 
+1.14.1 / 2019-06-20
+==================
+
+**others**
+  * [[`b1547fd`](http://github.com/alipay/sofa-rpc-node/commit/b1547fdd3b909e16c09cfe30147079b2251a5b77)] - chore: print req info if rpc server handleRequest failed (#53) (zōng yǔ <<gxcsoccer@users.noreply.github.com>>)
+
 1.14.0 / 2019-06-19
 ==================
 
