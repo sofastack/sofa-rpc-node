@@ -1,4 +1,10 @@
 
+1.14.2 / 2019-10-16
+==================
+
+**fixes**
+  * [[`e51c0ff`](http://github.com/alipay/sofa-rpc-node/commit/e51c0ff88ecde604c1325156809b6f5056de581b)] - fix: print warn log when connection count great than limit (#58) (killa <<killa123@126.com>>)
+
 1.14.1 / 2019-06-20
 ==================
 
