@@ -1,4 +1,10 @@
 
+1.15.0 / 2019-12-24
+==================
+
+**features**
+  * [[`ded6ad1`](http://github.com/sofastack/sofa-rpc-node/commit/ded6ad105a84a84929c999f5ee9e58433d518d2d)] - feat: support disable decode cache (#61) (killa <<killa123@126.com>>)
+
 1.14.2 / 2019-10-16
 ==================
 
