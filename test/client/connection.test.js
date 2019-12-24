@@ -22,6 +22,7 @@ describe('test/client/connection.test.js', () => {
       logger,
       port,
     });
+    let i = 0;
     server.addService({
       interfaceName: 'com.alipay.test.TestService',
       apiMeta: {
@@ -39,6 +40,25 @@ describe('test/client/connection.test.js', () => {
       async plus(a, b) {
         await sleep(100);
         return a + b;
+      },
+      async echo(hi, from) {
+        await sleep(100);
+        if (i++ === 0) {
+          return {
+            $class: 'com.alipay.EchoObject',
+            $: {
+              hi,
+              from,
+            },
+          };
+        }
+        return {
+          $class: 'com.alipay.EchoObject',
+          $: {
+            from,
+            hi,
+          },
+        };
       },
     });
     await server.start();
@@ -380,6 +400,54 @@ describe('test/client/connection.test.js', () => {
     assert(res.error);
     assert(res.error.name === 'RpcRequestEncodeError');
     assert(res.appResponse === null);
+    await connection.close();
+  });
+
+  it('disableDecodeCache should work', async function() {
+    const address = urlparse('bolt://127.0.0.1:' + port, true);
+    const connection = new RpcConnection({
+      address,
+      logger,
+      disableDecodeCache: true,
+    });
+    await connection.ready();
+
+    const args = [ 'hi', 'world' ];
+    const req = new RpcRequest({
+      serverSignature: 'com.alipay.test.TestService:1.0',
+      methodName: 'echo',
+      args,
+      requestProps: {},
+      timeout: 3000,
+    });
+    const res = await connection.invoke(req);
+    assert.deepStrictEqual(res, {
+      error: null,
+      appResponse: {
+        hi: 'hi',
+        from: 'world',
+      },
+      responseProps: null,
+    });
+
+    const args2 = [ 'hi', 'world' ];
+    const req2 = new RpcRequest({
+      serverSignature: 'com.alipay.test.TestService:1.0',
+      methodName: 'echo',
+      args: args2,
+      requestProps: {},
+      timeout: 3000,
+    });
+    const res2 = await connection.invoke(req2);
+
+    assert.deepStrictEqual(res2, {
+      error: null,
+      appResponse: {
+        hi: 'hi',
+        from: 'world',
+      },
+      responseProps: null,
+    });
     await connection.close();
   });
 });
