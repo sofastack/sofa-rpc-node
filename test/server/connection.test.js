@@ -283,4 +283,85 @@ describe('test/server/connection.test.js', () => {
 
     await connection.close();
   });
+
+  it('disable decode cache should works', async function() {
+    const address = urlparse('bolt://127.0.0.1:' + port + '?serialization=hessian2', true);
+    const clientSocket = net.connect(port, '127.0.0.1');
+    const socket = await awaitEvent(server, 'connection');
+    connection = new RpcConnection({
+      logger,
+      socket,
+      classMap,
+      disableDecodeCache: true,
+    });
+    await connection.ready();
+
+    const opts = {
+      sentReqs: new Map(),
+      classCache: new Map(),
+      address,
+      classMap,
+    };
+    const encoder = protocol.encoder(opts);
+    const decoder = protocol.decoder(opts);
+
+    pump(encoder, clientSocket, decoder, err => {
+      if (err) {
+        console.error(err);
+      }
+    });
+
+    encoder.writeRequest(1000, {
+      args: [{
+        $class: 'com.alipay.test.Test2Obj',
+        $: {
+          name: 'testname',
+          field: 'xxxxx',
+        },
+      }],
+      serverSignature: 'com.alipay.test.TestService:1.0',
+      methodName: 'echoObj',
+      requestProps: {
+        rpc_trace_context: {
+          sofaRpcId: '0.1',
+          sofaCallerIp: '127.0.0.1',
+          sofaTraceId: '0a0fe66b14781611353261001',
+          sofaPenAttrs: 'mark=T&',
+          sofaCallerApp: 'test',
+        },
+      },
+      timeout: 3000,
+    });
+
+    const req = await connection.await('request');
+    assert.deepStrictEqual(req.data.args, [{ name: 'testname', field: 'xxxxx' }]);
+
+    encoder.writeRequest(1000, {
+      args: [{
+        $class: 'com.alipay.test.Test2Obj',
+        $: {
+          // If use key cache, decode will get wrong result because key order is different
+          field: 'xxxxx',
+          name: 'testname',
+        },
+      }],
+      serverSignature: 'com.alipay.test.TestService:1.0',
+      methodName: 'echoObj',
+      requestProps: {
+        rpc_trace_context: {
+          sofaRpcId: '0.1',
+          sofaCallerIp: '127.0.0.1',
+          sofaTraceId: '0a0fe66b14781611353261001',
+          sofaPenAttrs: 'mark=T&',
+          sofaCallerApp: 'test',
+        },
+      },
+      timeout: 3000,
+    });
+
+    const req2 = await connection.await('request');
+    assert.deepStrictEqual(req2.data.args, [{ name: 'testname', field: 'xxxxx' }]);
+
+    await connection.close();
+  });
 });
