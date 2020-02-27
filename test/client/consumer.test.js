@@ -10,6 +10,7 @@ const RpcConnectionMgr = require('../..').client.RpcConnectionMgr;
 const ZookeeperRegistry = require('../../').registry.ZookeeperRegistry;
 const server = require('../supports/pb_server');
 const logger = console;
+const awaitEvent = require('await-event');
 
 const proto = antpb.loadAll(path.join(__dirname, '../fixtures/proto'));
 protocol.setOptions({ proto });
@@ -468,5 +469,38 @@ describe('test/client/consumer.test.js', () => {
     }
 
     consumer.close();
+  });
+
+  it('middleware catch err should not effect result code', async function() {
+    const consumer = new RpcConsumer({
+      interfaceName: 'com.alipay.sofa.rpc.test.ProtoService',
+      connectionManager,
+      connectionOpts: {
+        protocol,
+      },
+      registry,
+      logger,
+    });
+    await consumer.ready();
+    mm(consumer, 'getConnection', () => {
+      throw new Error('mock error');
+    });
+    const rpcContextPromise = awaitEvent(consumer, 'response');
+
+    consumer.use(async function(ctx, next) {
+      try {
+        await next();
+      } catch (_) {
+        // ...
+      }
+    });
+
+    const args = [{
+      name: 'Peter',
+      group: 'A',
+    }];
+    await consumer.invoke('echoObj', args);
+    const rpcContext = await rpcContextPromise;
+    assert(rpcContext.req.meta.resultCode === '01');
   });
 });
