@@ -1,4 +1,10 @@
 
+1.16.1 / 2020-02-28
+==================
+
+**fixes**
+  * [[`d18dabd`](http://github.com/sofastack/sofa-rpc-node/commit/d18dabda79ee44207183472c440e9f3d4b08db82)] - fix: mw should have no effective with result code (#63) (killa <<killa123@126.com>>)
+
 1.16.0 / 2019-12-24
 ==================
 
