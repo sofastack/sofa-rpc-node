@@ -1,4 +1,10 @@
 
+1.17.0 / 2020-03-12
+==================
+
+**features**
+  * [[`6c16373`](http://github.com/sofastack/sofa-rpc-node/commit/6c16373f28c48a7e95169487a94dac2c95084bf2)] - feat: createConsumer support cache control (#65) (mansonchor.github.com <<mansonchor@126.com>>)
+
 1.16.1 / 2020-02-28
 ==================
 
