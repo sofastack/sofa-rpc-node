@@ -14,12 +14,12 @@ const logger = console;
 const proto = antpb.loadAll(path.join(__dirname, '../fixtures/proto'));
 protocol.setOptions({ proto });
 
-describe('test/client/client.test.js', () => {
+describe.only('test/client/client.test.js', () => {
   let registry;
   before(async () => {
     registry = new ZookeeperRegistry({
       logger,
-      address: '127.0.0.1:2181',
+      address: 'localhost:2181',
     });
     await Promise.all([
       registry.ready(),
@@ -163,5 +163,52 @@ describe('test/client/client.test.js', () => {
     assert(!result);
 
     await client.close();
+  });
+
+  it.only('should createConsumer no cache', async function() {
+    const client = new RpcClient({
+      registry,
+      protocol,
+      logger,
+    });
+    client.consumerClass = RpcConsumer;
+
+    const consumer1 = client.createConsumer({
+      interfaceName: 'com.alipay.sofa.rpc.test.ProtoService',
+      targetAppName: 'pb',
+    });
+    await consumer1.ready();
+
+    const consumer2 = client.createConsumer({
+      interfaceName: 'com.alipay.sofa.rpc.test.ProtoService',
+      targetAppName: 'pb',
+    });
+    await consumer2.ready();
+
+    const consumer3 = client.createConsumer({
+      interfaceName: 'com.alipay.sofa.rpc.test.ProtoService',
+      targetAppName: 'pb',
+      cache: false,
+    });
+    await consumer3.ready();
+
+    consumer1.close();
+
+    const args = [{
+      name: 'Peter',
+      group: 'A',
+    }];
+    const ctx = { foo: 'bar' };
+    let res = await consumer3.invoke('echoObj', args, { ctx });
+    console.log('====== start res consumer3 =======');
+    console.log(res);
+    console.log('====== end ========');
+    assert.deepEqual(res, { code: 200, message: 'hello Peter, you are in A' });
+
+
+    res = await consumer2.invoke('echoObj', args, { ctx });
+    console.log('====== start res consumer2 =======');
+    console.log(res);
+    console.log('====== end ========');
   });
 });
