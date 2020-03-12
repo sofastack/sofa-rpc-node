@@ -173,42 +173,38 @@ describe.only('test/client/client.test.js', () => {
     });
     client.consumerClass = RpcConsumer;
 
-    const consumer1 = client.createConsumer({
+    const options = {
       interfaceName: 'com.alipay.sofa.rpc.test.ProtoService',
       targetAppName: 'pb',
-    });
+    };
+
+    const consumer1 = client.createConsumer(options);
     await consumer1.ready();
 
-    const consumer2 = client.createConsumer({
-      interfaceName: 'com.alipay.sofa.rpc.test.ProtoService',
-      targetAppName: 'pb',
-    });
+    const consumer2 = client.createConsumer(options);
     await consumer2.ready();
 
-    const consumer3 = client.createConsumer({
-      interfaceName: 'com.alipay.sofa.rpc.test.ProtoService',
-      targetAppName: 'pb',
-      cache: false,
-    });
+    const consumer3 = client.createConsumer(Object.assign({}, options, { cache: false }));
     await consumer3.ready();
 
+    // consumer1 close，in fact consumer2 will close too
     consumer1.close();
 
+    // consumer3 will not effect because createConsumer with cache: false
     const args = [{
       name: 'Peter',
       group: 'A',
     }];
     const ctx = { foo: 'bar' };
-    let res = await consumer3.invoke('echoObj', args, { ctx });
-    console.log('====== start res consumer3 =======');
-    console.log(res);
-    console.log('====== end ========');
+    const res = await consumer3.invoke('echoObj', args, { ctx });
     assert.deepEqual(res, { code: 200, message: 'hello Peter, you are in A' });
 
 
-    res = await consumer2.invoke('echoObj', args, { ctx });
-    console.log('====== start res consumer2 =======');
-    console.log(res);
-    console.log('====== end ========');
+    try {
+      await consumer2.invoke('echoObj', args, { ctx });
+      assert(false);
+    } catch (err) {
+      assert(err.message === 'No provider of com.alipay.sofa.rpc.test.ProtoService:1.0@SOFA:echoObj() found!');
+    }
   });
 });
