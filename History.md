@@ -1,4 +1,10 @@
 
+1.18.0 / 2020-03-23
+==================
+
+**features**
+  * [[`92e881c`](http://github.com/sofastack/sofa-rpc-node/commit/92e881c9071a354a6cc0fe8896f98f23bd62d946)] - feat: consumer parseUrl 前过滤非字符串内容 (#66) (mansonchor.github.com <<mansonchor@126.com>>)
+
 1.17.0 / 2020-03-12
 ==================
 
