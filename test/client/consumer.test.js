@@ -11,6 +11,7 @@ const ZookeeperRegistry = require('../../').registry.ZookeeperRegistry;
 const server = require('../supports/pb_server');
 const logger = console;
 const awaitEvent = require('await-event');
+const Base = require('sdk-base');
 
 const proto = antpb.loadAll(path.join(__dirname, '../fixtures/proto'));
 protocol.setOptions({ proto });
@@ -502,5 +503,60 @@ describe('test/client/consumer.test.js', () => {
     await consumer.invoke('echoObj', args);
     const rpcContext = await rpcContextPromise;
     assert(rpcContext.req.meta.resultCode === '01');
+  });
+
+  describe('should filter invalid address', () => {
+    class CustomRegistry extends Base {
+      constructor() {
+        super({ initMethod: '_init' });
+        this._isReady = false;
+      }
+
+      async _init() {
+        this._isReady = true;
+      }
+
+      subscribe(_, listener) {
+        if (!this._isReady) return;
+
+        listener([ '127.0.0.1:12202', null, undefined, [ 'aaa' ], { a: 1 }]);
+      }
+
+      unSubscribe() {
+        //
+      }
+
+      async close() {
+        //
+      }
+    }
+
+    const customRegistry = new CustomRegistry();
+    before(async () => {
+      await customRegistry.ready();
+    });
+
+    after(async () => {
+      await customRegistry.close();
+    });
+
+    it('on subscribe', async () => {
+      const consumer = new RpcConsumer({
+        interfaceName: 'com.alipay.sofa.rpc.test.ProtoService',
+        loadbalancerClass: 'random',
+        connectionManager,
+        connectionOpts: {
+          protocol,
+        },
+        registry: customRegistry,
+        logger,
+      });
+
+      await consumer.ready();
+
+      const addressList = consumer._addressGroup.addressList;
+      assert(addressList.length === 1);
+      assert(addressList[0].host === '127.0.0.1:12202');
+    });
   });
 });
