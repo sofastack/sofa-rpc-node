@@ -47,7 +47,8 @@ describe('test/server/service-custom-metadata.test.js', () => {
       interfaceName: 'com.node.test.TestService',
       version: '1.0',
       group: 'SOFA',
-      url: 'bolt://127.0.0.1:12200?interface=com.node.test.TestService&version=1.0&group=SOFA',
+      release: '2.7.4.1',
+      url: 'bolt://127.0.0.1:12200?interface=com.node.test.TestService&version=1.0&group=SOFA&release=2.7.4.1',
     });
 
     await service.publish('bolt://127.0.0.1:12200');
