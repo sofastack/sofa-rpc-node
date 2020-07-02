@@ -21,28 +21,25 @@ describe('test/grpc/index.test.js', () => {
       logger,
       port,
     });
-    server.addService(
-      {
-        interfaceName: 'helloworld.Greeter',
+    server.addService({
+      interfaceName: 'helloworld.Greeter',
+    }, {
+      async SayHello(req) {
+        await sleep(200);
+        return {
+          message: `hello ${req.name}`,
+        };
       },
-      {
-        async SayHello(req) {
-          await sleep(200);
-          return {
-            message: `hello ${req.name}`,
-          };
-        },
-        async SayHi(req) {
-          await sleep(100);
-          if (req.name === 'throw') {
-            throw new Error('test error message');
-          }
-          return {
-            message: `hi ${req.name}`,
-          };
-        },
-      }
-    );
+      async SayHi(req) {
+        await sleep(100);
+        if (req.name === 'throw') {
+          throw new Error('test error message');
+        }
+        return {
+          message: `hi ${req.name}`,
+        };
+      },
+    });
     await server.start();
     client = new GRpcClient({
       proto,
@@ -59,7 +56,7 @@ describe('test/grpc/index.test.js', () => {
   it('should invoke gRPC ok', async function() {
     const consumer = client.createConsumer({
       interfaceName: 'helloworld.Greeter',
-      serverHost: 'http://localhost:' + port,
+      serverHost: 'http://127.0.0.1:' + port,
     });
     await consumer.ready();
 
@@ -70,7 +67,7 @@ describe('test/grpc/index.test.js', () => {
   it('should invoke timeout', async function() {
     const consumer = client.createConsumer({
       interfaceName: 'helloworld.Greeter',
-      serverHost: 'http://localhost:' + port,
+      serverHost: 'http://127.0.0.1:' + port,
     });
     await consumer.ready();
 
@@ -114,7 +111,7 @@ describe('test/grpc/index.test.js', () => {
   it('should get error response when service throw exception', async function() {
     const consumer = client.createConsumer({
       interfaceName: 'helloworld.Greeter',
-      serverHost: 'http://localhost:' + port,
+      serverHost: 'http://127.0.0.1:' + port,
     });
     await consumer.ready();
     try {
@@ -131,7 +128,7 @@ describe('test/grpc/index.test.js', () => {
   it('should invoke large request body ok', async function() {
     const consumer = client.createConsumer({
       interfaceName: 'helloworld.Greeter',
-      serverHost: 'http://localhost:' + port,
+      serverHost: 'http://127.0.0.1:' + port,
     });
     await consumer.ready();
     const largeStr = Buffer.alloc(100 * 1024);

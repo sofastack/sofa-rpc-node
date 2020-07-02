@@ -12,7 +12,7 @@ const HealthCounts = require('../../lib/client/metric/health_counts');
 
 const port = 8081;
 const logger = console;
-const address = urlparse('http://localhost:' + port, true);
+const address = urlparse('http://127.0.0.1:' + port, true);
 const proto = antpb.loadAll(path.join(__dirname, '../fixtures/proto'));
 
 describe('test/grpc/connection.test.js', () => {
@@ -88,7 +88,7 @@ describe('test/grpc/connection.test.js', () => {
     });
     await conn.ready();
 
-    assert(conn.key === 'GRpcConnection@localhost:' + port);
+    assert(conn.key === 'GRpcConnection@127.0.0.1:' + port);
     assert(conn.logger === logger);
     assert(conn.isOk);
     assert(!conn.isClosed);
@@ -298,7 +298,7 @@ describe('test/grpc/connection.test.js', () => {
     const err = r.error;
     assert(err && !r.appResponse);
     assert(err.name === 'GRpcCircuitBreakerError');
-    assert(err.message === 'this request is block by circuit breaker, HealthCounts[600 / 1000 : 60%, avg rt : 100ms], url: http://localhost:8081/');
+    assert(err.message === 'this request is block by circuit breaker, HealthCounts[600 / 1000 : 60%, avg rt : 100ms], url: http://127.0.0.1:8081/');
     conn.resetCounter();
     await conn.close();
   });
