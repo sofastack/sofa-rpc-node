@@ -1,4 +1,13 @@
 
+1.19.0 / 2020-07-02
+==================
+
+**fixes**
+  * [[`578528f`](http://github.com/alipay/sofa-rpc-node/commit/578528f4d20fff09d3ab566f59ccd3039cc4ecaf)] - fix: no provider wrapError (#69) (陈峰 <<348018533@qq.com>>)
+
+**others**
+  * [[`1560625`](http://github.com/alipay/sofa-rpc-node/commit/1560625421a8b0f5da519e2b2ba6b8dcba7dd218)] - egg的rpc.server支持customMeta配置，用于支持自定义元数据； (#67) (ChangedenChan <<changeden520@gmail.com>>)
+
 1.18.0 / 2020-03-23
 ==================
 
