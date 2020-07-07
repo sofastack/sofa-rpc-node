@@ -1,31 +1,18 @@
 'use strict';
 
 const mm = require('mm');
+const path = require('path');
 const assert = require('assert');
-const zookeeper = require('zookeeper-cluster-client');
-const { ACL, Permission, Id } = require('node-zookeeper-client');
+const cp = require('child_process');
 const ZookeeperRegistry = require('../../lib/registry/zk/data_client');
 
 const logger = console;
 
 describe('test/registry/acl.test.js', () => {
   let registry;
-  let client;
-  before(async function() {
-    client = zookeeper.createClient('localhost:2181', {
-      authInfo: {
-        scheme: 'digest',
-        auth: 'gxcsoccer:123456',
-      },
-    });
 
-    await client.mkdirp('/acl');
-    await client.setACL('/acl', [
-      new ACL(
-        Permission.ALL,
-        new Id('auth', 'gxcsoccer:123456')
-      ),
-    ], -1);
+  before(async function() {
+    cp.spawnSync('node', [ path.join(__dirname, 'acl.js') ], { stdio: 'inherit' });
 
     registry = new ZookeeperRegistry({
       logger,
@@ -38,7 +25,6 @@ describe('test/registry/acl.test.js', () => {
     await registry.ready();
   });
   after(async function() {
-    await client.close();
     await registry.close();
   });
   afterEach(() => {
