@@ -1,4 +1,10 @@
 
+2.0.0 / 2020-07-07
+==================
+
+**others**
+  * [[`87b7683`](http://github.com/alipay/sofa-rpc-node/commit/87b7683ce93b44235e27c4d91d9f40629b174591)] - chore: upgrade sofa-bolt-node@2.0.1 (#70) (zōng yǔ <<gxcsoccer@users.noreply.github.com>>)
+
 1.19.0 / 2020-07-02
 ==================
 
