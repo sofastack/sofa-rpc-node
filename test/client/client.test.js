@@ -207,4 +207,54 @@ describe('test/client/client.test.js', () => {
       assert(err.message === 'No provider of com.alipay.sofa.rpc.test.ProtoService:1.0@SOFA:echoObj() found!');
     }
   });
+
+  it('should createConsumer with no cache not override client._consumerCache map', async function() {
+    const client = new RpcClient({
+      registry,
+      protocol,
+      logger,
+    });
+    client.consumerClass = RpcConsumer;
+
+    const options = {
+      interfaceName: 'com.alipay.sofa.rpc.test.ProtoService',
+      targetAppName: 'pb',
+    };
+
+    const consumer1 = client.createConsumer(options);
+    await consumer1.ready();
+
+    const consumer2 = client.createConsumer(Object.assign({}, options, { cache: false }));
+    await consumer2.ready();
+
+    assert(client._consumerCache.size === 1);
+
+    // client close will not effect consumer with cache: false
+    // need close manually
+    await client.close();
+
+    const args = [{
+      name: 'Peter',
+      group: 'A',
+    }];
+    const ctx = { foo: 'bar' };
+
+    try {
+      await consumer1.invoke('echoObj', args, { ctx });
+      assert(false);
+    } catch (err) {
+      assert(err.message === 'No provider of com.alipay.sofa.rpc.test.ProtoService:1.0@SOFA:echoObj() found!');
+    }
+
+    const res = await consumer2.invoke('echoObj', args, { ctx });
+    assert.deepEqual(res, { code: 200, message: 'hello Peter, you are in A' });
+
+    await consumer2.close();
+    try {
+      await consumer2.invoke('echoObj', args, { ctx });
+      assert(false);
+    } catch (err) {
+      assert(err.message === 'No provider of com.alipay.sofa.rpc.test.ProtoService:1.0@SOFA:echoObj() found!');
+    }
+  });
 });
