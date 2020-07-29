@@ -1,4 +1,10 @@
 
+1.19.1 / 2020-07-29
+==================
+
+**fixes**
+  * [[`df67e89`](http://github.com/sofastack/sofa-rpc-node/commit/df67e89adbe4ca3efc8da7432d7ffbb892f97d46)] - fix: create consumer with cache: false, will not override client._consumerCache map (#71) (mansonchor.github.com <<mansonchor@126.com>>)
+
 1.19.0 / 2020-07-02
 ==================
 

@@ -1,6 +1,6 @@
 {
   "name": "sofa-rpc-node",
-  "version": "1.19.0",
+  "version": "1.19.1",
   "description": "SOFARPC Nodejs Implementation",
   "main": "lib/index.js",
   "files": [
@@ -68,5 +68,8 @@
   "ci": {
     "type": "travis",
     "version": "8, 10, 12"
+  },
+  "publishConfig": {
+    "tag": "latest-1"
   }
 }
