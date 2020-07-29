@@ -69,6 +69,6 @@
   },
   "ci": {
     "type": "travis",
-    "version": "10, 12, 14"
+    "version": "10, 12, 14, 16"
   }
 }
