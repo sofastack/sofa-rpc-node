@@ -1,4 +1,10 @@
 
+1.19.2 / 2020-09-15
+==================
+
+**fixes**
+  * [[`2484ee7`](http://github.com/sofastack/sofa-rpc-node/commit/2484ee79a1a5b4b22573ef100a1ea3ef04e7fc83)] - fix: should await ready in invoke insteadof _invoke (#74) (killa <<killa123@126.com>>)
+
 1.19.1 / 2020-07-29
 ==================
 
