@@ -12,6 +12,7 @@ const server = require('../supports/pb_server');
 const logger = console;
 const awaitEvent = require('await-event');
 const Base = require('sdk-base');
+const CustomRpcConsumer = require('../fixtures/CustomRpcConsumer');
 
 const proto = antpb.loadAll(path.join(__dirname, '../fixtures/proto'));
 protocol.setOptions({ proto });
@@ -77,7 +78,7 @@ describe('test/client/consumer.test.js', () => {
   });
 
   it('should invoke ok before ready', async function() {
-    const consumer = new RpcConsumer({
+    const consumer = new CustomRpcConsumer({
       interfaceName: 'com.alipay.sofa.rpc.test.ProtoService',
       connectionManager,
       registry,
