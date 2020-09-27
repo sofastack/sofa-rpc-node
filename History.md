@@ -1,4 +1,10 @@
 
+1.20.0 / 2020-09-27
+==================
+
+**others**
+  * [[`f18ce21`](http://github.com/sofastack/sofa-rpc-node/commit/f18ce21bcd0089482ec6f983f6cbf2faefb15908)] - refactor: support child class overwrite connections mng (#75) (killa <<killa123@126.com>>)
+
 1.19.2 / 2020-09-15
 ==================
 
