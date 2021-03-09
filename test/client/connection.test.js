@@ -170,6 +170,36 @@ describe('test/client/connection.test.js', () => {
     }
   });
 
+  it('should destroy after ended', async function() {
+    const address = urlparse('bolt://127.0.0.1:' + port + '?serialization=hessian2', true);
+    let connection = new RpcConnection({ address, logger });
+
+    const args = [{
+      $class: 'java.lang.Integer',
+      $: 1,
+    }, {
+      $class: 'java.lang.Integer',
+      $: 2,
+    }];
+
+    const req = new RpcRequest({
+      serverSignature: 'com.alipay.test.TestService:1.0',
+      methodName: 'plus',
+      args,
+      requestProps: {},
+      timeout: 3000,
+    });
+
+    connection.invoke(req);
+    connection.forceClose();
+    await new Promise((res, rej) => {
+      connection._socket.once('close', () => {
+        if (!connection._socket._writableState.ended) rej(new Error('should ended before destroy'));
+        res();
+      });
+    });
+  });
+
   it('should not emit error after close', async function() {
     const address = urlparse(`bolt://127.0.0.1:${port}`, true);
     const connection = new RpcConnection({ address, logger });
