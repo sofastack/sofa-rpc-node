@@ -172,8 +172,7 @@ describe('test/client/connection.test.js', () => {
 
   it('should destroy after ended', async function() {
     const address = urlparse('bolt://127.0.0.1:' + port + '?serialization=hessian2', true);
-    let connection = new RpcConnection({ address, logger });
-
+    const connection = new RpcConnection({ address, logger });
     const args = [{
       $class: 'java.lang.Integer',
       $: 1,
