@@ -175,6 +175,21 @@ describe('test/server/connection.test.js', () => {
     await connection.await('close');
   });
 
+  it('should destroy after ended', async function() {
+    const address = urlparse('bolt://127.0.0.1:' + port + '?serialization=hessian2', true);
+    net.connect(address.port, address.hostname);
+    const socket = await awaitEvent(server, 'connection');
+    const connection = new RpcConnection({ address, socket, logger });
+    await connection.ready();
+    connection.close();
+    await new Promise((res, rej) => {
+      socket.once('close', () => {
+        if (!socket._writableState.ended) rej(new Error('should ended before destroy'));
+        res();
+      });
+    });
+  });
+
   it('should handle ECONNRESET error', async function() {
     const address = urlparse('bolt://127.0.0.1:' + port + '?serialization=hessian2', true);
     net.connect(address.port, address.hostname);
