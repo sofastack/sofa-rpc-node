@@ -1,4 +1,10 @@
 
+1.20.1 / 2021-04-13
+==================
+
+**fixes**
+  * [[`dd2197f`](http://github.com/sofastack/sofa-rpc-node/commit/dd2197f742c5b8d9aa2d9b393bf9fb09e1cf0785)] - fix: 统一使用 connectionManager 提供的 API (mansonchor.github.com <<mansonchor1987@gmail.com>>)
+
 1.20.0 / 2020-09-27
 ==================
 
