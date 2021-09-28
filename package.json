@@ -1,6 +1,6 @@
 {
   "name": "sofa-rpc-node",
-  "version": "1.18.0",
+  "version": "2.0.0",
   "description": "SOFARPC Nodejs Implementation",
   "main": "lib/index.js",
   "files": [
@@ -8,13 +8,15 @@
   ],
   "scripts": {
     "autod": "autod",
-    "lint": "eslint . --ext .js",
+    "lint": "eslint . --ext .js --fix",
     "cov": "TEST_TIMEOUT=20000 egg-bin cov",
     "test": "npm run lint && npm run test-local",
     "test-local": "egg-bin test",
     "pkgfiles": "egg-bin pkgfiles --check",
-    "ci": "npm run autod -- --check && npm run pkgfiles && npm run lint && npm run cov",
-    "contributors": "contributors -f plain -o AUTHORS"
+    "ci": "npm run start:zk && npm run autod -- --check && npm run pkgfiles && npm run lint && npm run cov",
+    "contributors": "contributors -f plain -o AUTHORS",
+    "start:zk": "node test/scripts/start.js",
+    "stop:zk": "node test/scripts/stop.js"
   },
   "repository": {
     "type": "git",
@@ -31,7 +33,7 @@
   },
   "homepage": "https://github.com/alipay/sofa-rpc-node#readme",
   "dependencies": {
-    "address": "^1.1.0",
+    "address": "^1.1.2",
     "await-event": "^2.1.0",
     "await-first": "^1.0.0",
     "byte": "^2.0.0",
@@ -44,29 +46,29 @@
     "mz-modules": "^2.1.0",
     "pump": "^3.0.0",
     "sdk-base": "^3.6.0",
-    "sofa-bolt-node": "^1.1.1",
+    "sofa-bolt-node": "^2.0.1",
     "urlencode": "^1.1.0",
-    "utility": "^1.16.1",
+    "utility": "^1.16.3",
     "zookeeper-cluster-client": "^3.1.0"
   },
   "devDependencies": {
     "antpb": "^1.0.0",
     "autod": "^3.1.0",
-    "coffee": "^5.2.1",
+    "coffee": "^5.4.0",
     "contributors": "^0.5.1",
     "dubbo-remoting": "^2.1.4",
-    "egg-bin": "^4.13.0",
-    "eslint": "^5.16.0",
-    "eslint-config-egg": "^7.4.1",
-    "mm": "^2.5.0",
-    "node-zookeeper-client": "^1.0.0",
+    "egg-bin": "^4.14.1",
+    "eslint": "^7.3.1",
+    "eslint-config-egg": "^8.0.1",
+    "mm": "^3.2.0",
+    "node-zookeeper-client": "^1.1.0",
     "pedding": "^1.1.0"
   },
   "engines": {
-    "node": ">= 8.0.0"
+    "node": ">= 10.0.0"
   },
   "ci": {
     "type": "travis",
-    "version": "8, 10, 12"
+    "version": "10, 12, 14"
   }
 }

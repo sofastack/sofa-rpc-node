@@ -11,7 +11,7 @@ const CallStream = require('../../lib/client/connection/grpc/call_stream');
 
 const port = 8082;
 const logger = console;
-const url = 'http://localhost:' + port;
+const url = 'http://127.0.0.1:' + port;
 const proto = antpb.loadAll(path.join(__dirname, '../fixtures/proto'));
 
 describe('test/grpc/call_stream.test.js', () => {
