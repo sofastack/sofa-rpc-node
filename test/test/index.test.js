@@ -430,4 +430,16 @@ describe('test/test/index.test.js', () => {
         }, done);
     });
   });
+
+  describe('support custom group name', () => {
+    it('should ping success', done => {
+      const server = require('../supports/custom_group_name_server');
+      request(server)
+      .service('com.alipay.node.rpctest.echoService')
+      .invoke('ping')
+      .expect(res => {
+        assert.equal(res, 'custom-group-name');
+      }, done);
+    });
+  });
 });
