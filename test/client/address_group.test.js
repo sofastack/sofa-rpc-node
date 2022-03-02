@@ -83,6 +83,26 @@ describe('test/client/address_group.test.js', () => {
     await addressGroup.close();
   });
 
+  it('should on next event only once even if new AddressGroup many times', async function() {
+    const groups = [ 'xxx', 'xxx', 'xxx', 'yyy', 'yyy' ].map(key => {
+      const addressGroup = new AddressGroup({
+        key,
+        logger,
+        connectionManager,
+      });
+      addressGroup.addressList = [];
+      return addressGroup;
+    });
+    await Promise.all(groups.map(group => group.ready()));
+    groups.forEach(group => {
+      assert(group._healthCounter.listenerCount('next') === 1);
+    });
+    await Promise.all(groups.map(group => group.close()));
+    groups.forEach(group => {
+      assert(group._healthCounter.listenerCount('next') === 0);
+    });
+  });
+
   it('should not change weight for invalid address', async function() {
     const addressGroup = new AddressGroup({
       key: 'yyy',
