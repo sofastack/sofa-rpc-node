@@ -68,7 +68,10 @@
     "node": ">= 10.0.0"
   },
   "ci": {
-    "type": "travis",
-    "version": "10, 12, 14, 16"
+    "type": "github",
+    "version": "10, 12, 14, 16",
+    "os": {
+      "github": "linux"
+    }
   }
 }
