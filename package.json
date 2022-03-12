@@ -67,7 +67,7 @@
   },
   "ci": {
     "type": "github",
-    "version": "10, 12, 14, 16",
+    "version": "10, 12, 14",
     "os": {
       "github": "linux"
     }
