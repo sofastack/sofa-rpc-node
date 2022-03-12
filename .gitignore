@@ -17,7 +17,6 @@ run
 !.eslintrc
 !.gitignore
 !.travis.yml
-!.autod.conf.js
 *.bin
 
 zookeeper.out
