@@ -7,13 +7,12 @@
     "lib"
   ],
   "scripts": {
-    "autod": "autod",
     "lint": "eslint . --ext .js --fix",
     "cov": "TEST_TIMEOUT=20000 egg-bin cov",
     "test": "npm run lint && npm run test-local",
     "test-local": "egg-bin test",
     "pkgfiles": "egg-bin pkgfiles --check",
-    "ci": "npm run start:zk && npm run autod -- --check && npm run pkgfiles && npm run lint && npm run cov",
+    "ci": "npm run start:zk && npm run pkgfiles && npm run lint && npm run cov",
     "contributors": "contributors -f plain -o AUTHORS",
     "start:zk": "node test/scripts/start.js",
     "stop:zk": "node test/scripts/stop.js"
@@ -53,7 +52,6 @@
   },
   "devDependencies": {
     "antpb": "^1.0.0",
-    "autod": "^3.1.0",
     "coffee": "^5.4.0",
     "contributors": "^0.5.1",
     "dubbo-remoting": "^2.1.4",

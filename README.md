@@ -2,7 +2,7 @@
 [SOFARPC](https://github.com/alipay/sofa-rpc) Nodejs 实现版本
 
 [![NPM version][npm-image]][npm-url]
-[![build status][travis-image]][travis-url]
+[![Node.js CI](https://github.com/sofastack/sofa-rpc-node/actions/workflows/nodejs.yml/badge.svg)](https://github.com/sofastack/sofa-rpc-node/actions/workflows/nodejs.yml)
 [![Known Vulnerabilities][snyk-image]][snyk-url]
 [![npm download][download-image]][download-url]
 
