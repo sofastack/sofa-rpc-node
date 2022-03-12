@@ -1,4 +1,18 @@
 
+2.1.0 / 2022-03-12
+==================
+
+**fixes**
+  * [[`11411f2`](http://github.com/sofastack/sofa-rpc-node/commit/11411f2a543d47fc4fe7681336c0ec4b99ea792c)] - fix: 统一使用 connectionManager 提供的 API (mansonchor.github.com <<mansonchor1987@gmail.com>>)
+  * [[`6717e4f`](http://github.com/sofastack/sofa-rpc-node/commit/6717e4f9d980d95fcdd79ec232e0e1f154cfa9f9)] - fix: should await ready in invoke insteadof _invoke (#74) (killa <<killa123@126.com>>)
+  * [[`99124c9`](http://github.com/sofastack/sofa-rpc-node/commit/99124c92fb90076df1d158c23772855cc73421c2)] - fix: create consumer with cache: false, will not override client._consumerCache map (#71) (mansonchor.github.com <<mansonchor@126.com>>)
+
+**others**
+  * [[`23cc741`](http://github.com/sofastack/sofa-rpc-node/commit/23cc7412b3eaf3a07bff854d61661c87f0c5da7e)] - test: skip unstable assert (fengmk2 <<fengmk2@gmail.com>>)
+  * [[`3436650`](http://github.com/sofastack/sofa-rpc-node/commit/3436650a8201806f3f88bdaad517586cc07e1fc8)] - chore: remove autod (fengmk2 <<fengmk2@gmail.com>>)
+  * [[`b92c60d`](http://github.com/sofastack/sofa-rpc-node/commit/b92c60d151c84172d4726e40f60b1c14f1b79faf)] - test: run ci on GitHub Action (fengmk2 <<fengmk2@gmail.com>>)
+  * [[`ef9ffa8`](http://github.com/sofastack/sofa-rpc-node/commit/ef9ffa8ac7178580b4c7c31e4e697eebbcf79393)] - refactor: support child class overwrite connections mng (#75) (killa <<killa123@126.com>>)
+
 2.0.0 / 2020-07-07
 ==================
 
