@@ -1,4 +1,10 @@
 
+2.2.0 / 2022-03-13
+==================
+
+**features**
+  * [[`394b0ff`](http://github.com/sofastack/sofa-rpc-node/commit/394b0ff246280b50e8d11ab46c09c353d54f40c8)] - feat: 运行覆盖 ConnectionManager 初始化链接异常消息 (#91) (fengmk2 <<fengmk2@gmail.com>>)
+
 2.1.0 / 2022-03-12
 ==================
 
