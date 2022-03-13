@@ -836,7 +836,7 @@ describe('test/client/address_group.test.js', () => {
 
           const count = addressGroup._weightMap.get(address.host);
           // unstable assert
-          assert(count=== 10 || count >= 5);
+          assert(count === 10 || count >= 5);
         } else {
           assert(connection && connection.latestHealthCount);
           const hc = connection.latestHealthCount;
