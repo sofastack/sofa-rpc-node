@@ -1,4 +1,10 @@
 
+2.2.1 / 2022-03-17
+==================
+
+**others**
+  * [[`e06219e`](http://github.com/sofastack/sofa-rpc-node/commit/e06219e5479504d92964d2114a5a35c39db3d690)] - fix AddressGroup Ready may on 'next' event many times (#86) (羊鹿 <<general_up@163.com>>)
+
 2.2.0 / 2022-03-13
 ==================
 
