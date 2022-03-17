@@ -91,16 +91,6 @@ describe('test/server.test.js', () => {
     } catch (err) {
       console.log(err);
       assert(err.message.includes('Cannot read property \'split\' of null'));
-      assert(err.req);
-      assert(err.req.packetId === 1);
-      assert.deepEqual(err.req.data, {
-        methodName: 'foo',
-        serverSignature: null,
-        args: [],
-        methodArgSigs: [],
-        requestProps: null,
-        targetAppName: 'test',
-      });
     }
     socket.destroy();
     await server.close();
