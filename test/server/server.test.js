@@ -96,7 +96,6 @@ describe('test/server.test.js', () => {
       assert.deepEqual(err.req.data, {
         methodName: 'foo',
         serverSignature: null,
-        args: [],
         methodArgSigs: [],
         interfaceName: undefined,
         requestProps: null,
