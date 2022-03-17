@@ -4,6 +4,7 @@ const mm = require('mm');
 const net = require('net');
 const assert = require('assert');
 const sleep = require('mz-modules/sleep');
+const awaitEvent = require('await-event');
 const request = require('../../').test;
 const dubboProtocol = require('dubbo-remoting');
 const RpcClient = require('../../').client.RpcClient;
@@ -62,7 +63,7 @@ describe('test/server.test.js', () => {
     await server.close();
   });
 
-  it('should handleRequest error', async () => {
+  it.only('should handleRequest error', async () => {
     server = new RpcServer({
       appName: 'test',
       registry,
@@ -86,6 +87,16 @@ describe('test/server.test.js', () => {
     const socket = net.connect(12200, '127.0.0.1');
     socket.write(buf);
 
+
+    const [ err, req ] = await awaitEvent(server, 'error');
+    console.log('======= start ========');
+    console.log({ err, req });
+    console.log('======= end ========');
+    // const data = await server.await('error');
+    // console.log('======= start data ========');
+    // console.log(data);
+    // console.log('======= end ========');
+
     try {
       await server.await('error');
     } catch (err) {
@@ -96,8 +107,8 @@ describe('test/server.test.js', () => {
       assert.deepEqual(err.req.data, {
         methodName: 'foo',
         serverSignature: null,
-        args: [],
         methodArgSigs: [],
+        interfaceName: undefined,
         requestProps: null,
         targetAppName: 'test',
       });
