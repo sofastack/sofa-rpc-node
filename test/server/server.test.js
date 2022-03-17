@@ -5,6 +5,7 @@ const net = require('net');
 const assert = require('assert');
 const sleep = require('mz-modules/sleep');
 const awaitEvent = require('await-event');
+const Event = require('events');
 const request = require('../../').test;
 const dubboProtocol = require('dubbo-remoting');
 const RpcClient = require('../../').client.RpcClient;
@@ -63,7 +64,7 @@ describe('test/server.test.js', () => {
     await server.close();
   });
 
-  it.only('should handleRequest error', async () => {
+  it('should handleRequest error', async () => {
     server = new RpcServer({
       appName: 'test',
       registry,
@@ -87,32 +88,28 @@ describe('test/server.test.js', () => {
     const socket = net.connect(12200, '127.0.0.1');
     socket.write(buf);
 
+    let err;
+    let req;
+    const ee = new Event();
+    server.on('error', (passErr, passReq) => {
+      err = passErr;
+      req = passReq;
+      ee.emit('done');
+    });
 
-    const [ err, req ] = await awaitEvent(server, 'error');
-    console.log('======= start ========');
-    console.log({ err, req });
-    console.log('======= end ========');
-    // const data = await server.await('error');
-    // console.log('======= start data ========');
-    // console.log(data);
-    // console.log('======= end ========');
+    await awaitEvent(ee, 'done');
+    assert(err.message.includes('Cannot read property \'split\' of null'));
+    assert(req);
+    assert(req.packetId === 1);
+    assert.deepEqual(req.data, {
+      methodName: 'foo',
+      serverSignature: null,
+      methodArgSigs: [],
+      interfaceName: undefined,
+      requestProps: null,
+      targetAppName: 'test',
+    });
 
-    try {
-      await server.await('error');
-    } catch (err) {
-      console.log(err);
-      assert(err.message.includes('Cannot read property \'split\' of null'));
-      assert(err.req);
-      assert(err.req.packetId === 1);
-      assert.deepEqual(err.req.data, {
-        methodName: 'foo',
-        serverSignature: null,
-        methodArgSigs: [],
-        interfaceName: undefined,
-        requestProps: null,
-        targetAppName: 'test',
-      });
-    }
     socket.destroy();
     await server.close();
   });
