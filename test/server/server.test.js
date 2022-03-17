@@ -62,7 +62,7 @@ describe('test/server.test.js', () => {
     await server.close();
   });
 
-  it('should handleRequest error', async () => {
+  it.only('should handleRequest error', async () => {
     server = new RpcServer({
       appName: 'test',
       registry,
@@ -96,7 +96,9 @@ describe('test/server.test.js', () => {
       assert.deepEqual(err.req.data, {
         methodName: 'foo',
         serverSignature: null,
+        args: [],
         methodArgSigs: [],
+        interfaceName: undefined,
         requestProps: null,
         targetAppName: 'test',
       });
