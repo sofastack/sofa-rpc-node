@@ -1,4 +1,10 @@
 
+2.2.2 / 2022-03-18
+==================
+
+**fixes**
+  * [[`91760de`](http://github.com/sofastack/sofa-rpc-node/commit/91760de4fbe3a61ea85a5018e72fedff5e5bad61)] - fix: 去掉 err 上附带 req 信息，打印 error 的话可能存在安全内容泄漏 (#94) (mansonchor.github.com <<mansonchor1987@gmail.com>>)
+
 2.2.1 / 2022-03-17
 ==================
 
