@@ -1,4 +1,10 @@
 
+2.3.0 / 2022-04-12
+==================
+
+**features**
+  * [[`a88bf21`](http://github.com/sofastack/sofa-rpc-node/commit/a88bf21cdf99db807655a7e49a61d7d2ca768795)] - feat: do loadBalancer close when address_group close (mansonchor <<mansonchor1987@gmail.com>>)
+
 2.2.2 / 2022-03-18
 ==================
 
