@@ -203,6 +203,39 @@ describe('test/client/address_group.test.js', () => {
     await utils.closeAll();
   });
 
+  it('balancerFilter 优先匹配', async function() {
+    await Promise.all([
+      utils.startServer(13201),
+      utils.startServer(13202),
+    ]);
+
+    const addressGroup = new AddressGroup({
+      key: 'xxx',
+      logger,
+      connectionManager,
+      balancerFilter: addressList => {
+        return addressList.filter(v => {
+          return v.host === '127.0.0.1:13202';
+        });
+      },
+    });
+    addressGroup.addressList = [
+      urlparse('bolt://127.0.0.1:13201', true),
+      urlparse('bolt://127.0.0.1:13202', true),
+    ];
+    let count = 10;
+    while (count--) {
+      const connection = await addressGroup.getConnection(req);
+      assert(connection && connection.isConnected);
+      // 优先匹配
+      assert(connection.url === 'bolt://127.0.0.1:13202');
+    }
+
+    addressGroup.close();
+    await connectionManager.closeAllConnections();
+    await utils.closeAll();
+  });
+
   describe('对于连不上地址的处理', () => {
     const mod = 2;
     const count = 10;
