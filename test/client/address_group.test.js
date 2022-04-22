@@ -207,6 +207,8 @@ describe('test/client/address_group.test.js', () => {
     await Promise.all([
       utils.startServer(13201),
       utils.startServer(13202),
+      utils.startServer(13203),
+      utils.startServer(13204),
     ]);
 
     const addressGroup = new AddressGroup({
@@ -222,8 +224,10 @@ describe('test/client/address_group.test.js', () => {
     addressGroup.addressList = [
       urlparse('bolt://127.0.0.1:13201', true),
       urlparse('bolt://127.0.0.1:13202', true),
+      urlparse('bolt://127.0.0.1:13203', true),
+      urlparse('bolt://127.0.0.1:13204', true),
     ];
-    let count = 10;
+    let count = 3;
     while (count--) {
       const connection = await addressGroup.getConnection(req);
       assert(connection && connection.isConnected);
@@ -238,7 +242,6 @@ describe('test/client/address_group.test.js', () => {
     while (count--) {
       const connection = await addressGroup.getConnection(req);
       assert(connection && connection.isConnected);
-      // 优先匹配
       assert(connection.url === 'bolt://127.0.0.1:13201');
     }
     addressGroup.close();
