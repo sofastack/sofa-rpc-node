@@ -244,6 +244,14 @@ describe('test/client/address_group.test.js', () => {
       assert(connection && connection.isConnected);
       assert(connection.url === 'bolt://127.0.0.1:13201');
     }
+    addressGroup.addressList = [
+      urlparse('bolt://127.0.0.1:13202', true),
+    ];
+    addressGroup._weightMap.set('127.0.0.1:13202', 20);
+    addressGroup._maxIdleWindow = addressGroup._maxIdleWindow + Date.now();
+    const connection = await addressGroup.getConnection(req);
+    assert(connection && connection.isConnected);
+    assert(connection.url === 'bolt://127.0.0.1:13202');
     addressGroup.close();
     await connectionManager.closeAllConnections();
     await utils.closeAll();
