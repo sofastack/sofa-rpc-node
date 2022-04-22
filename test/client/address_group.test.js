@@ -230,7 +230,45 @@ describe('test/client/address_group.test.js', () => {
       // 优先匹配
       assert(connection.url === 'bolt://127.0.0.1:13202');
     }
+    addressGroup.addressList = [
+      urlparse('bolt://127.0.0.1:13201', true),
+    ];
+    count = 3;
+    while (count--) {
+      const connection = await addressGroup.getConnection(req);
+      assert(connection && connection.isConnected);
+      // 优先匹配
+      assert(connection.url === 'bolt://127.0.0.1:13201');
+    }
+    addressGroup.close();
+    await connectionManager.closeAllConnections();
+    await utils.closeAll();
+  });
 
+  it('balancerFilter 优先匹配 异常', async function() {
+    await Promise.all([
+      utils.startServer(13201),
+      utils.startServer(13202),
+    ]);
+
+    const addressGroup = new AddressGroup({
+      key: 'xxx',
+      logger,
+      connectionManager,
+      balancerFilter: addressList => {
+        return addressList.map(() => [ 1 ]);
+      },
+    });
+    // 使用错误地址
+    addressGroup.addressList = [
+      urlparse('bolt://127.0.0.1:132011', true),
+      urlparse('bolt://127.0.0.1:132022', true),
+    ];
+    try {
+      await addressGroup.getConnection(req);
+    } catch (error) {
+      assert(error.code === 'ERR_SOCKET_BAD_PORT');
+    }
     addressGroup.close();
     await connectionManager.closeAllConnections();
     await utils.closeAll();
