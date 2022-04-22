@@ -230,6 +230,7 @@ describe('test/client/address_group.test.js', () => {
       // 优先匹配
       assert(connection.url === 'bolt://127.0.0.1:13202');
     }
+    // 匹配到的数据不可用时，会调用其他地址
     addressGroup.addressList = [
       urlparse('bolt://127.0.0.1:13201', true),
     ];
