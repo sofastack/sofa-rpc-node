@@ -227,6 +227,7 @@ describe('test/client/address_group.test.js', () => {
       urlparse('bolt://127.0.0.1:13203', true),
       urlparse('bolt://127.0.0.1:13204', true),
     ];
+    await addressGroup.ready();
     let count = 3;
     while (count--) {
       const connection = await addressGroup.getConnection(req);
