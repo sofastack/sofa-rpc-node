@@ -39,7 +39,7 @@ jobs:
         tar xf zookeeper-3.4.6.tar.gz
         mv zookeeper-3.4.6/conf/zoo_sample.cfg zookeeper-3.4.6/conf/zoo.cfg
         ./zookeeper-3.4.6/bin/zkServer.sh start
-        npm i -g npminstall && npminstall
+        npm i -g npminstall@5 && npminstall
 
     - name: Continuous Integration
       run: npm run ci
