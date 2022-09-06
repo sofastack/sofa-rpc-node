@@ -1,5 +1,6 @@
 # sofa-rpc-node
-[SOFARPC](https://github.com/alipay/sofa-rpc) Nodejs 实现版本
+
+[SOFARPC](https://github.com/alipay/sofa-rpc) Node.js 实现版本
 
 [![NPM version][npm-image]][npm-url]
 [![Node.js CI](https://github.com/sofastack/sofa-rpc-node/actions/workflows/nodejs.yml/badge.svg)](https://github.com/sofastack/sofa-rpc-node/actions/workflows/nodejs.yml)
@@ -8,8 +9,6 @@
 
 [npm-image]: https://img.shields.io/npm/v/sofa-rpc-node.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/sofa-rpc-node
-[codecov-image]: https://codecov.io/gh/alipay/sofa-rpc-node/branch/master/graph/badge.svg
-[codecov-url]: https://codecov.io/gh/alipay/sofa-rpc-node
 [snyk-image]: https://snyk.io/test/npm/sofa-rpc-node/badge.svg?style=flat-square
 [snyk-url]: https://snyk.io/test/npm/sofa-rpc-node
 [download-image]: https://img.shields.io/npm/dm/sofa-rpc-node.svg?style=flat-square
@@ -17,7 +16,10 @@
 
 ## 一、SOFARPC Node 简介
 
-简单说它是 [SOFARPC](https://github.com/alipay/sofa-rpc) 的 Nodejs 版实现，但本质上它是一个通用的 Nodejs RPC 解决方案。Nodejs RPC 在阿里和蚂蚁内部已经发展了四五年时间，如今广泛应用于各类业务场景，并经历了多次双 11 大促的考验。功能方面从基本的服务发布、寻址、点对点远程调用能力；到各种路由、负载均衡策略；再到故障隔离、熔断等高级功能，已逐渐发展成一个高可扩展性、高性能、生产级的 RPC 框架。
+简单说它是 [SOFARPC](https://github.com/alipay/sofa-rpc) 的 Node.js 版实现，但本质上它是一个通用的 Node.js RPC 解决方案。
+Node.js RPC 在阿里和蚂蚁内部已经发展了四五年时间，如今广泛应用于各类业务场景，并经历了多次双 11 大促的考验。
+功能方面从基本的服务发布、寻址、点对点远程调用能力；到各种路由、负载均衡策略；再到故障隔离、熔断等高级功能，
+已逐渐发展成一个高可扩展性、高性能、生产级的 RPC 框架。
 
 ## 二、模块划分
 
@@ -39,23 +41,24 @@ SOFARPC Node 主要包含了四个子模块，分别是：
 
 ## 三、快速上手
 
-#### 安装
+### 安装
 
 ```bash
 $ npm install sofa-rpc-node --save
 ```
 
-#### 安装并启动 zookeeper
+### 安装并启动 zookeeper
 
 sofa-rpc-node 默认的注册中心实现基于 zookeeper，所以需要先启动一个 zookeeper 实例
 
 从 Homebrew 安装（macOs）
 
 ```bash
-$ brew install zookeeper
+brew install zookeeper
 ```
 
 启动 zk server（默认端口为 2181）
+
 ```bash
 $ zkServer start
 ZooKeeper JMX enabled by default
@@ -63,9 +66,10 @@ Using config: /usr/local/etc/zookeeper/zoo.cfg
 Starting zookeeper ... STARTED
 ```
 
-#### 代码示例
+### 代码示例
 
 - 暴露一个 RPC 服务，并发布到注册中心
+
 ```js
 'use strict';
 
@@ -103,6 +107,7 @@ server.start()
 ```
 
 - 调用 RPC 服务（从注册中心获取服务列表）
+
 ```js
 'use strict';
 
@@ -138,6 +143,7 @@ invoke().catch(console.error);
 ```
 
 - 调用 RPC 服务（直连模式）
+
 ```js
 'use strict';
 
@@ -163,6 +169,7 @@ invoke().catch(console.error);
 ```
 
 - 测试 RPC Server 的方法（用于单元测试）
+
 ```js
 'use strict';
 
@@ -203,6 +210,7 @@ describe('test/server.test.js', () => {
 - 暴露和调用 protobuf 接口
 
 通过 *.proto 来定义接口
+
 ```proto
 syntax = "proto3";
 
@@ -232,6 +240,7 @@ enum Group {
 ```
 
 服务端代码
+
 ```js
 'use strict';
 
@@ -277,6 +286,7 @@ server.start()
 ```
 
 客户端代码
+
 ```js
 'use strict';
 
@@ -317,7 +327,7 @@ async function invoke() {
 invoke().catch(console.error);
 ```
 
-#### 最佳实践
+### 最佳实践
 
 虽然上面我们提供了示例代码，但是我们并不推荐您直接使用该模块，因为它的定位是 RPC 基础模块，只提供基本的 API，对于业务开发者可能并不是非常友好。我们的最佳实践是通过插件将 RPC 能力集成到 [eggjs](https://github.com/eggjs/egg) 框架里，提供更加直观友好的用户接口，让您就像使用本地方法一样使用 RPC。这块也会在近期开放，敬请期待！
 
