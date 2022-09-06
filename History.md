@@ -1,4 +1,10 @@
 
+2.3.1 / 2022-09-06
+==================
+
+**fixes**
+  * [[`50b8500`](http://github.com/sofastack/sofa-rpc-node/commit/50b8500c7b7edf41f07aacf023da255a2acf9804)] - fix: print err if encoder/decoder error (#101) (killa <<killa123@126.com>>)
+
 2.3.0 / 2022-04-12
 ==================
 
