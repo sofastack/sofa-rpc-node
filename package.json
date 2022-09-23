@@ -39,7 +39,7 @@
     "cluster-client": "^3.0.1",
     "debug": "^4.1.1",
     "easy-table": "^1.1.1",
-    "graceful": "^1.0.2",
+    "graceful": "^1.1.0",
     "is-type-of": "^1.2.1",
     "koa-compose": "^4.1.0",
     "mz-modules": "^2.1.0",
