@@ -1,4 +1,13 @@
 
+2.4.0 / 2022-09-26
+==================
+
+**features**
+  * [[`a8201b7`](http://github.com/sofastack/sofa-rpc-node/commit/a8201b72ccbbf6b54a101dee93acc3b0e869694d)] - feat(graceful): support serverGracefulIgnoreCode (#103) (hyj1991 <<yeekwanvong@gmail.com>>)
+
+**others**
+  * [[`e74e280`](http://github.com/sofastack/sofa-rpc-node/commit/e74e280e24b3e1c9810675bff5140e0b467cd600)] - Create codeql-analysis.yml (fengmk2 <<fengmk2@gmail.com>>)
+
 2.3.1 / 2022-09-06
 ==================
 
