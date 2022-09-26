@@ -54,6 +54,7 @@
     "antpb": "^1.0.0",
     "coffee": "^5.4.0",
     "contributors": "^0.5.1",
+    "detect-port": "^1.5.1",
     "dubbo-remoting": "^2.1.4",
     "egg-bin": "^4.14.1",
     "eslint": "^7.3.1",
