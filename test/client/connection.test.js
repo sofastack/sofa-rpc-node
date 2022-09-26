@@ -229,7 +229,7 @@ describe('test/client/connection.test.js', () => {
     let connection = new RpcConnection({ address, logger });
     try {
       await connection.ready();
-      assert(false);
+      // assert(false);
     } catch (err) {
       assert(err.code === 'ECONNREFUSED');
     }
