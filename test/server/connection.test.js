@@ -14,6 +14,7 @@ const RpcConnection = require('../../lib/server/connection');
 const classMap = require('../fixtures/class_map');
 const logger = console;
 const proto = antpb.loadAll(path.join(__dirname, '../fixtures/proto'));
+const parseRequestPropsWithHeader = true;
 
 describe('test/server/connection.test.js', () => {
   let server;
@@ -87,6 +88,7 @@ describe('test/server/connection.test.js', () => {
       classCache: new Map(),
       address,
       classMap,
+      parseRequestPropsWithHeader,
     };
     const encoder = protocol.encoder(opts);
     const decoder = protocol.decoder(opts);
