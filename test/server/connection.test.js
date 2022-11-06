@@ -14,6 +14,7 @@ const RpcConnection = require('../../lib/server/connection');
 const classMap = require('../fixtures/class_map');
 const logger = console;
 const proto = antpb.loadAll(path.join(__dirname, '../fixtures/proto'));
+const parseRequestPropsWithHeader = true;
 
 describe('test/server/connection.test.js', () => {
   let server;
@@ -79,7 +80,7 @@ describe('test/server/connection.test.js', () => {
     const address = urlparse('bolt://127.0.0.1:' + port + '?serialization=hessian2', true);
     const clientSocket = net.connect(port, '127.0.0.1');
     const socket = await awaitEvent(server, 'connection');
-    connection = new RpcConnection({ logger, socket, classMap });
+    connection = new RpcConnection({ logger, socket, classMap, parseRequestPropsWithHeader });
     await connection.ready();
 
     const opts = {
@@ -87,6 +88,7 @@ describe('test/server/connection.test.js', () => {
       classCache: new Map(),
       address,
       classMap,
+      parseRequestPropsWithHeader,
     };
     const encoder = protocol.encoder(opts);
     const decoder = protocol.decoder(opts);
