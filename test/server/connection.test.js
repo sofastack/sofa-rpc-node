@@ -80,7 +80,7 @@ describe('test/server/connection.test.js', () => {
     const address = urlparse('bolt://127.0.0.1:' + port + '?serialization=hessian2', true);
     const clientSocket = net.connect(port, '127.0.0.1');
     const socket = await awaitEvent(server, 'connection');
-    connection = new RpcConnection({ logger, socket, classMap });
+    connection = new RpcConnection({ logger, socket, classMap, parseRequestPropsWithHeader });
     await connection.ready();
 
     const opts = {
