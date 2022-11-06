@@ -1,4 +1,10 @@
 
+2.5.0 / 2022-11-06
+==================
+
+**others**
+  * [[`c32eb53`](http://github.com/sofastack/sofa-rpc-node/commit/c32eb53d24fbeb15b801c9ad25bb9bfe2fc3dc58)] - chore: add parseRequestPropsWithHeader decode option (#104) (mytEcust <<mytfromecust@gmail.com>>)
+
 2.4.0 / 2022-09-26
 ==================
 
