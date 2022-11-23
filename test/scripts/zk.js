@@ -1,48 +1,17 @@
-'use strict';
-
 const fs = require('fs');
 const path = require('path');
 const cp = require('child_process');
+const runscript = require('runscript');
 
 const cwd = path.join(__dirname, '../..');
 
 async function detectZookeeper() {
-  return new Promise(resolve => {
-    const netstat = cp.spawn('netstat', [ '-an' ]);
-    const grep = cp.spawn('grep', [ '2181' ]);
-
-    netstat.stdout.on('data', data => {
-      grep.stdin.write(data);
-    });
-
-    netstat.stderr.on('data', data => {
-      console.error(`netstat stderr: ${data}`);
-    });
-
-    netstat.on('close', code => {
-      if (code !== 0) {
-        console.log(`netstat process exited with code ${code}`);
-      }
-      grep.stdin.end();
-    });
-
-    grep.stdout.on('data', data => {
-      console.log(data.toString());
-    });
-
-    grep.stderr.on('data', data => {
-      console.error(`grep stderr: ${data}`);
-    });
-
-    grep.on('close', code => {
-      if (code !== 0) {
-        console.log(`grep process exited with code ${code}`);
-        resolve(false);
-      } else {
-        resolve(true);
-      }
-    });
-  });
+  try {
+    await runscript('netstat -an | grep 2181');
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 async function extract() {
