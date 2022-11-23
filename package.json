@@ -62,7 +62,8 @@
     "eslint-config-egg": "^12.1.0",
     "mm": "^3.2.0",
     "node-zookeeper-client": "^1.1.0",
-    "pedding": "^1.1.0"
+    "pedding": "^1.1.0",
+    "runscript": "^1.5.3"
   },
   "engines": {
     "node": ">= 10.0.0"
