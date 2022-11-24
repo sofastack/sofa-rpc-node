@@ -13,6 +13,7 @@ const server = new RpcServer({
   logger,
   registry,
   port: 19200,
+  publishAddress: '127.0.0.1',
 });
 
 server.addService({

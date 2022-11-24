@@ -1,5 +1,6 @@
 'use strict';
 
+const assert = require('assert');
 const path = require('path');
 const coffee = require('coffee');
 const RpcClient = require('../../').client.RpcClient;
@@ -13,20 +14,44 @@ describe('test/server/uncaught.exception.test.js', () => {
       address: '127.0.0.1:2181',
     });
 
+    const interfaceName = 'com.node.rpctest.ExceptionService';
     registry.subscribe({
-      interfaceName: 'com.node.rpctest.ExceptionService',
+      interfaceName,
     }, val => {
-      console.log(val);
+      console.log('subscribe %s: %j', interfaceName, val);
       if (val && val.length) {
         const client = new RpcClient({
           logger,
           registry,
         });
         client.invoke({
-          interfaceName: 'com.node.rpctest.ExceptionService',
-          methodName: 'kill',
+          interfaceName,
+          methodName: 'helloError',
           args: [],
-          options: { timeout: 3000 },
+        }).catch(err => {
+          console.error('%o', err);
+          assert(err);
+
+          client.invoke({
+            interfaceName,
+            methodName: 'timeout',
+            args: [],
+            options: { responseTimeout: 1000 },
+          }).then(res => {
+            console.log('---------- should not get res: %o', res);
+          }).catch(err => {
+            console.error('timeout error: %s', err);
+            assert(err);
+
+            client.invoke({
+              interfaceName,
+              methodName: 'kill',
+              args: [],
+              options: { responseTimeout: 3000 },
+            }).then(res => {
+              assert(res === 'ok');
+            });
+          });
         });
       }
     });
@@ -37,8 +62,10 @@ describe('test/server/uncaught.exception.test.js', () => {
       },
     })
       .expect('stderr', /\[RpcServer\] server is down, cause by uncaughtException in this process \d+/)
+      .includes('stderr', 'mock-ctx-logger-error: Error: mock hello error')
+      .includes('stdout', 'mock-ctx-logger-warn: [')
       .expect('code', 1)
-      .debug(0)
+      .debug()
       .end(done);
   });
 });

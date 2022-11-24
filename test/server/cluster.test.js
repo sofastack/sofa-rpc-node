@@ -42,7 +42,6 @@ describe('test/server/cluster.test.js', () => {
   });
 
   it('should support cluster server', function(done) {
-    this.timeout(60000);
     done = pedding(done, 2);
 
     coffee.fork(path.join(__dirname, '..', 'fixtures', 'server_1.js'), [], { env: { NODE_CLUSTER_CLIENT_SINGLE_MODE: '1' } })
