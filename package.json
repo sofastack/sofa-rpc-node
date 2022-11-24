@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "lint": "eslint . --ext .js --fix",
-    "cov": "TEST_TIMEOUT=20000 egg-bin cov",
+    "cov": "egg-bin cov",
     "test": "npm run lint && npm run test-local",
     "test-local": "egg-bin test",
     "pkgfiles": "egg-bin pkgfiles --check",

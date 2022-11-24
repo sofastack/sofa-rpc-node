@@ -14,7 +14,7 @@ const ZookeeperRegistry = require('../../').registry.ZookeeperRegistry;
 const logger = console;
 const version = process.versions.node;
 
-describe('test/server.test.js', () => {
+describe('test/server/server.test.js', () => {
   let client;
   let server;
   let registry;
@@ -37,6 +37,10 @@ describe('test/server.test.js', () => {
   after(async function() {
     await client.close();
     await registry.close();
+    if (server) {
+      await server.close();
+      server = null;
+    }
   });
 
   it('should format url without rpcVersion', async function() {
@@ -48,6 +52,7 @@ describe('test/server.test.js', () => {
     });
     assert(server.url.endsWith('dynamic=true&appName=test&timeout=3000&serialization=protobuf&weight=100&accepts=100000&language=nodejs&rpcVer=50400&protocol='));
     await server.close();
+    server = null;
   });
 
   it('should format url with property protocol type', async function() {
@@ -60,6 +65,7 @@ describe('test/server.test.js', () => {
     assert(server.url.startsWith('dubbo://'));
     assert(server.url.endsWith('dynamic=true&appName=test&timeout=3000&serialization=hessian2&weight=100&accepts=100000&language=nodejs&rpcVer=50400&protocol=dubbo'));
     await server.close();
+    server = null;
   });
 
   it('should handleRequest error', async () => {
@@ -89,13 +95,14 @@ describe('test/server.test.js', () => {
     try {
       await server.await('error');
     } catch (err) {
-      console.log(err);
-      assert(err.message.includes('Cannot read property \'split\' of null'));
+      // console.log(err);
+      // assert(err.message.includes('Cannot read property \'split\' of null'));
+      assert(err.message.includes('Cannot read'));
     }
     socket.destroy();
     await server.close();
+    server = null;
   });
-
 
   describe('bolt', () => {
     before(async function() {
@@ -152,6 +159,7 @@ describe('test/server.test.js', () => {
     });
     after(async function() {
       await server.close();
+      server = null;
     });
 
     it('should delegate provider error event', done => {

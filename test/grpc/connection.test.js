@@ -60,8 +60,12 @@ describe('test/grpc/connection.test.js', () => {
       await conn.ready();
       assert(false);
     } catch (err) {
-      assert(err.name === 'GRpcSessionConnectTimeoutError');
-      assert(err.message === 'session#http://2.2.2.2:8888/ connect timeout(200ms)');
+      if (err.name === 'GRpcSocketError') {
+        assert(err.includes('ENETUNREACH'));
+      } else {
+        assert(err.name === 'GRpcSessionConnectTimeoutError');
+        assert(err.message === 'session#http://2.2.2.2:8888/ connect timeout(200ms)');
+      }
     }
   });
 
