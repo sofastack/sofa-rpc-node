@@ -506,6 +506,27 @@ describe('test/client/consumer.test.js', () => {
     assert(rpcContext.req.meta.resultCode === '01');
   });
 
+  it('should throw ready timeout error when wait more than responseTimeout', async () => {
+    const consumer = new RpcConsumer({
+      interfaceName: 'not.exist.interface.3129864320',
+      loadbalancerClass: 'random',
+      connectionManager,
+      connectionOpts: {
+        protocol,
+      },
+      registry,
+      logger,
+      responseTimeout: 10
+    });
+
+    try{
+      await consumer.invoke('test', [{}])
+      assert(false);
+    }catch(err){
+      assert(err && err.message.includes('Consumer ready timeout for 10ms'));
+    }
+  })
+
   describe('should filter invalid address', () => {
     class CustomRegistry extends Base {
       constructor() {
