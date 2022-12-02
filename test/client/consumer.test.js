@@ -507,7 +507,7 @@ describe('test/client/consumer.test.js', () => {
   });
 
   it('should throw ready timeout error when wait more than responseTimeout', async () => {
-    const consumer = new CustomRpcConsumer({
+    const consumer = new RpcConsumer({
       interfaceName: 'com.alipay.sofa.rpc.test.ProtoService',
       loadbalancerClass: 'random',
       connectionManager,
