@@ -521,6 +521,7 @@ describe('test/client/consumer.test.js', () => {
 
     await consumer.ready()
     consumer._isReady = false
+    consumer.ready(false)
 
     try{
       await consumer.invoke('test', [{}])
