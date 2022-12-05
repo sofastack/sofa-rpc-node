@@ -506,6 +506,31 @@ describe('test/client/consumer.test.js', () => {
     assert(rpcContext.req.meta.resultCode === '01');
   });
 
+  it('should throw ready timeout error when wait more than responseTimeout', async () => {
+    const consumer = new RpcConsumer({
+      interfaceName: 'com.alipay.sofa.rpc.test.ProtoService',
+      loadbalancerClass: 'random',
+      connectionManager,
+      connectionOpts: {
+        protocol,
+      },
+      registry,
+      logger,
+      responseTimeout: 10
+    });
+
+    await consumer.ready()
+    consumer._isReady = false
+    consumer.ready(false)
+
+    try {
+      await consumer.invoke('test', [{}])
+      assert(false);
+    } catch (err) {
+      assert(err && err.message.includes('[RpcConsumer] Consumer ready error: Promise timed out after 10 milliseconds'));
+    }
+  })
+
   describe('should filter invalid address', () => {
     class CustomRegistry extends Base {
       constructor() {

@@ -12,19 +12,16 @@ const registry = new ZookeeperRegistry({
 const server = new RpcServer({
   logger,
   registry,
-  port: 19201,
-  publishAddress: '127.0.0.1',
+  port: 12200,
+  killTimeout: 1000,
+  serverGracefulIgnoreCode: ['EMOCKERROR']
 });
 
 server.addService({
-  interfaceName: 'com.nodejs.test.ClusterService',
+  interfaceName: 'com.nodejs.test.TestService',
 }, {
-  async kill() {
-    setTimeout(() => {
-      console.log('exit ----- 19201');
-      process.exit(0);
-    }, 500);
-    return 'ok';
+  async plus(a, b) {
+    return a + b;
   },
 });
 
@@ -32,3 +29,14 @@ server.start()
   .then(() => {
     server.publish();
   });
+
+
+setTimeout(function () {
+  const error = new Error('MockError');
+  error.code = 'EMOCKERROR';
+  throw error;
+}, 1000);
+
+setTimeout(function () {
+  process.exit(0);
+}, 10000)

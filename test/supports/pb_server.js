@@ -10,14 +10,16 @@ const logger = console;
 const proto = require('antpb').loadAll(path.join(__dirname, '../fixtures/proto'));
 protocol.setOptions({ proto });
 
-const registry = new ZookeeperRegistry({
-  logger,
-  address: '127.0.0.1:2181',
-});
 
 let server;
+let registry;
 
 exports.start = async function() {
+  registry = new ZookeeperRegistry({
+    logger,
+    address: '127.0.0.1:2181',
+  });
+
   server = new RpcServer({
     appName: 'pb',
     logger: console,
@@ -47,4 +49,5 @@ exports.start = async function() {
 
 exports.close = async function() {
   await server.close();
+  await registry.close();
 };

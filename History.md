@@ -1,4 +1,34 @@
 
+2.7.0 / 2022-12-05
+==================
+
+**features**
+  * [[`178cb61`](http://github.com/sofastack/sofa-rpc-node/commit/178cb6168ba948a0899c0f9817fc161544a78932)] - feat(lib): support consumer ready timeout (#108) (KenyeeCheung <<me@kenyee.cc>>)
+
+2.6.0 / 2022-11-25
+==================
+
+**features**
+  * [[`a11b04e`](http://github.com/sofastack/sofa-rpc-node/commit/a11b04eb493061ef684f65a381360efe6fc41219)] - 👌 IMPROVE: Try to use ctx.logger first (#106) (fengmk2 <<fengmk2@gmail.com>>)
+
+**others**
+  * [[`590be81`](http://github.com/sofastack/sofa-rpc-node/commit/590be8156112f96a343a6cb3a269f12a1831a93c)] - 🤖 TEST: Only test Node.js >= 14 (#105) (fengmk2 <<fengmk2@gmail.com>>)
+
+2.5.0 / 2022-11-06
+==================
+
+**others**
+  * [[`c32eb53`](http://github.com/sofastack/sofa-rpc-node/commit/c32eb53d24fbeb15b801c9ad25bb9bfe2fc3dc58)] - chore: add parseRequestPropsWithHeader decode option (#104) (mytEcust <<mytfromecust@gmail.com>>)
+
+2.4.0 / 2022-09-26
+==================
+
+**features**
+  * [[`a8201b7`](http://github.com/sofastack/sofa-rpc-node/commit/a8201b72ccbbf6b54a101dee93acc3b0e869694d)] - feat(graceful): support serverGracefulIgnoreCode (#103) (hyj1991 <<yeekwanvong@gmail.com>>)
+
+**others**
+  * [[`e74e280`](http://github.com/sofastack/sofa-rpc-node/commit/e74e280e24b3e1c9810675bff5140e0b467cd600)] - Create codeql-analysis.yml (fengmk2 <<fengmk2@gmail.com>>)
+
 2.3.1 / 2022-09-06
 ==================
 

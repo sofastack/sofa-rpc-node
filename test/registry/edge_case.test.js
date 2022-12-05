@@ -77,7 +77,7 @@ describe('test/registry/edge_case.test.js', () => {
     assert.deepEqual(val, [ 'bolt://127.0.0.2:12200', 'bolt://127.0.0.3:12200' ]);
     assert.deepEqual(firstVal, [ 'bolt://127.0.0.2:12200', 'bolt://127.0.0.3:12200' ]);
 
-    registry.close();
-    registry2.close();
+    await registry.close();
+    await registry2.close();
   });
 });

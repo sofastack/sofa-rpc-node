@@ -3,19 +3,21 @@
 const path = require('path');
 const antpb = require('antpb');
 const assert = require('assert');
+const detect = require('detect-port');
 const sleep = require('mz-modules/sleep');
 const request = require('../../lib').test;
 const { GRpcClient } = require('../../').client;
 const { GRpcServer } = require('../../').server;
 
-const port = 8080;
 const logger = console;
 const proto = antpb.loadAll(path.join(__dirname, '../fixtures/proto'));
 
 describe('test/grpc/index.test.js', () => {
   let client;
   let server;
+  let port;
   before(async function() {
+    port = await detect(8080);
     server = new GRpcServer({
       proto,
       logger,
