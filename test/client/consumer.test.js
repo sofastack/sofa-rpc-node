@@ -523,11 +523,11 @@ describe('test/client/consumer.test.js', () => {
     consumer._isReady = false
     consumer.ready(false)
 
-    try{
+    try {
       await consumer.invoke('test', [{}])
       assert(false);
-    }catch(err){
-      assert(err && err.message.includes('[RpcConsumer] Consumer ready timeout for 10ms'));
+    } catch (err) {
+      assert(err && err.message.includes('[RpcConsumer] Consumer ready error: Promise timed out after 10 milliseconds'));
     }
   })
 
