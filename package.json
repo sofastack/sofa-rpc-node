@@ -45,7 +45,7 @@
     "koa-compose": "^4.1.0",
     "mz-modules": "^2.1.0",
     "pump": "^3.0.0",
-    "sdk-base": "^3.6.0",
+    "sdk-base": "^4.0.0",
     "sofa-bolt-node": "^2.0.1",
     "urlencode": "^1.1.0",
     "utility": "^1.16.3",
