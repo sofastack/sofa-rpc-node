@@ -1,4 +1,10 @@
 
+2.7.0 / 2022-12-05
+==================
+
+**features**
+  * [[`178cb61`](http://github.com/sofastack/sofa-rpc-node/commit/178cb6168ba948a0899c0f9817fc161544a78932)] - feat(lib): support consumer ready timeout (#108) (KenyeeCheung <<me@kenyee.cc>>)
+
 2.6.0 / 2022-11-25
 ==================
 
