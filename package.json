@@ -11,8 +11,7 @@
     "cov": "egg-bin cov",
     "test": "npm run lint && npm run test-local",
     "test-local": "egg-bin test",
-    "pkgfiles": "egg-bin pkgfiles --check",
-    "ci": "npm run start:zk && npm run pkgfiles && npm run lint && npm run cov",
+    "ci": "npm run start:zk && npm run lint && npm run cov",
     "contributors": "contributors -f plain -o AUTHORS",
     "start:zk": "node test/scripts/start.js",
     "stop:zk": "node test/scripts/stop.js"
@@ -45,7 +44,7 @@
     "koa-compose": "^4.1.0",
     "mz-modules": "^2.1.0",
     "pump": "^3.0.0",
-    "sdk-base": "^4.0.0",
+    "sdk-base": "^4.2.1",
     "sofa-bolt-node": "^2.0.1",
     "urlencode": "^1.1.0",
     "utility": "^1.16.3",

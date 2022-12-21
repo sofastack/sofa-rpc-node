@@ -1,47 +1,23 @@
-name: Node.js CI
+name: CI
 
 on:
   push:
-    branches:
-      - main
-      - master
+    branches: [ master ]
+
   pull_request:
-    branches:
-      - main
-      - master
-  schedule:
-    - cron: '0 2 * * *'
+    branches: [ master ]
+
+  workflow_dispatch: {}
 
 jobs:
-  build:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version: [14, 16, 18]
-        os: [ubuntu-latest]
-
-    steps:
-    - name: Checkout Git Source
-      uses: actions/checkout@v2
-
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-
-    - name: Install Dependencies
-      run: |
+  Job:
+    name: Node.js
+    uses: artusjs/github-actions/.github/workflows/node-test.yml@v1
+    with:
+      os: 'ubuntu-latest'
+      version: '14, 16, 18'
+      install: |
         tar xf zookeeper-3.4.6.tar.gz
         mv zookeeper-3.4.6/conf/zoo_sample.cfg zookeeper-3.4.6/conf/zoo.cfg
         ./zookeeper-3.4.6/bin/zkServer.sh start
-        npm i
-
-    - name: Continuous Integration
-      run: npm run ci
-
-    - name: Code Coverage
-      uses: codecov/codecov-action@v1
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
+        npm i --no-package-lock --no-fund
