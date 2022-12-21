@@ -516,20 +516,20 @@ describe('test/client/consumer.test.js', () => {
       },
       registry,
       logger,
-      responseTimeout: 10
+      responseTimeout: 10,
     });
 
-    await consumer.ready()
-    consumer._isReady = false
-    consumer.ready(false)
+    await consumer.ready();
+    consumer._isReady = false;
+    consumer.ready(false);
 
     try {
-      await consumer.invoke('test', [{}])
+      await consumer.invoke('test', [{}]);
       assert(false);
     } catch (err) {
       assert(err && err.message.includes('[RpcConsumer] Consumer ready error: Promise timed out after 10 milliseconds'));
     }
-  })
+  });
 
   describe('should filter invalid address', () => {
     class CustomRegistry extends Base {

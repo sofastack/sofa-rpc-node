@@ -1,14 +1,13 @@
-'use strict';
-
-const mm = require('mm');
 const net = require('net');
+const { AsyncLocalStorage } = require('async_hooks');
 const assert = require('assert');
+const mm = require('mm');
 const sleep = require('mz-modules/sleep');
-const request = require('../../').test;
 const dubboProtocol = require('dubbo-remoting');
+const protocol = require('sofa-bolt-node/lib/protocol');
+const request = require('../../').test;
 const RpcClient = require('../../').client.RpcClient;
 const RpcServer = require('../../').server.RpcServer;
-const protocol = require('sofa-bolt-node/lib/protocol');
 const ZookeeperRegistry = require('../../').registry.ZookeeperRegistry;
 
 const logger = console;
@@ -391,6 +390,94 @@ describe('test/server/server.test.js', () => {
       }
 
       await server_1.close();
+    });
+  });
+
+  describe('bolt with localStorage', () => {
+    const asyncLocalStorage = new AsyncLocalStorage();
+    before(async () => {
+      class NewRpcServer extends RpcServer {
+        createContext(req) {
+          return { req };
+        }
+      }
+      server = new NewRpcServer({
+        appName: 'test',
+        registry,
+        version,
+        logger,
+        port: 0,
+        localStorage: asyncLocalStorage,
+      });
+      server.addService({
+        interfaceName: 'com.alipay.x.facade.HelloRpcFacade',
+        version,
+        apiMeta: {
+          methods: [{
+            name: 'plus',
+            parameterTypes: [
+              'java.lang.Integer',
+              'java.lang.Integer',
+            ],
+            returnType: 'java.lang.Integer',
+          }],
+        },
+      }, {
+        // a + b
+        async plus(a, b) {
+          return a + b;
+        },
+      });
+      server.addService({
+        interfaceName: 'com.alipay.test.TestService',
+      }, {
+        async error() {
+          const ctx = asyncLocalStorage.getStore();
+          console.log('ctx', !!ctx, typeof ctx);
+          throw new Error('mock error with ctx ' + !!ctx);
+        },
+      });
+      server.addService({
+        interfaceName: 'com.alipay.test.HelloService',
+        version,
+        uniqueId: 'hello',
+      }, {
+        async hello() {
+          await sleep(2000);
+          return 'hello';
+        },
+      });
+      await server.start();
+      await server.publish();
+    });
+
+    after(async () => {
+      await server.close();
+      server = null;
+    });
+
+    it('should invoke ok', () => {
+      return request(server)
+        .service('com.alipay.x.facade.HelloRpcFacade')
+        .invoke('plus')
+        .send([ 1, 2 ])
+        .expect(3);
+    });
+
+    it('should resultCode=01 if biz error', async () => {
+      let meta;
+      server.once('response', data => {
+        meta = data.res.meta;
+      });
+
+      await request(server)
+        .service('com.alipay.test.TestService')
+        .invoke('error')
+        .timeout(1000)
+        .send([])
+        .error(/mock error with ctx true/);
+
+      assert(meta && meta.resultCode === '01');
     });
   });
 
