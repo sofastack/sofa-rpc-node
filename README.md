@@ -332,3 +332,16 @@ invoke().catch(console.error);
 ## 五、开源协议
 
 [MIT](LICENSE)
+
+<!-- GITCONTRIBUTOR_START -->
+
+## Contributors
+
+|[<img src="https://avatars.githubusercontent.com/u/1207064?v=4" width="100px;"/><br/><sub><b>gxcsoccer</b></sub>](https://github.com/gxcsoccer)<br/>|[<img src="https://avatars.githubusercontent.com/u/156269?v=4" width="100px;"/><br/><sub><b>fengmk2</b></sub>](https://github.com/fengmk2)<br/>|[<img src="https://avatars.githubusercontent.com/u/6897780?v=4" width="100px;"/><br/><sub><b>killagu</b></sub>](https://github.com/killagu)<br/>|[<img src="https://avatars.githubusercontent.com/u/2160731?v=4" width="100px;"/><br/><sub><b>mansonchor</b></sub>](https://github.com/mansonchor)<br/>|[<img src="https://avatars.githubusercontent.com/u/32174276?v=4" width="100px;"/><br/><sub><b>semantic-release-bot</b></sub>](https://github.com/semantic-release-bot)<br/>|[<img src="https://avatars.githubusercontent.com/u/9605663?v=4" width="100px;"/><br/><sub><b>ChangedenCZD</b></sub>](https://github.com/ChangedenCZD)<br/>|
+| :---: | :---: | :---: | :---: | :---: | :---: |
+|[<img src="https://avatars.githubusercontent.com/u/18223471?v=4" width="100px;"/><br/><sub><b>KenyeeC</b></sub>](https://github.com/KenyeeC)<br/>|[<img src="https://avatars.githubusercontent.com/u/9674709?v=4" width="100px;"/><br/><sub><b>RabbitSion</b></sub>](https://github.com/RabbitSion)<br/>|[<img src="https://avatars.githubusercontent.com/u/19908330?v=4" width="100px;"/><br/><sub><b>hyj1991</b></sub>](https://github.com/hyj1991)<br/>|[<img src="https://avatars.githubusercontent.com/u/17831480?v=4" width="100px;"/><br/><sub><b>mytEcust</b></sub>](https://github.com/mytEcust)<br/>|[<img src="https://avatars.githubusercontent.com/u/1183163?v=4" width="100px;"/><br/><sub><b>smile21</b></sub>](https://github.com/smile21)<br/>|[<img src="https://avatars.githubusercontent.com/u/16103358?v=4" width="100px;"/><br/><sub><b>onlylovermb</b></sub>](https://github.com/onlylovermb)<br/>|
+[<img src="https://avatars.githubusercontent.com/u/7371122?v=4" width="100px;"/><br/><sub><b>chenfengjw163</b></sub>](https://github.com/chenfengjw163)<br/>
+
+This project follows the git-contributor [spec](https://github.com/xudafeng/git-contributor), auto updated at `Mon May 22 2023 14:22:46 GMT+0800`.
+
+<!-- GITCONTRIBUTOR_END -->
