@@ -15,7 +15,7 @@ jobs:
     uses: artusjs/github-actions/.github/workflows/node-test.yml@v1
     with:
       os: 'ubuntu-latest'
-      version: '14, 16, 18'
+      version: '14, 16, 18, 20'
       install: |
         tar xf zookeeper-3.4.6.tar.gz
         mv zookeeper-3.4.6/conf/zoo_sample.cfg zookeeper-3.4.6/conf/zoo.cfg
