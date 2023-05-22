@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.10.0](https://github.com/sofastack/sofa-rpc-node/compare/v2.9.0...v2.10.0) (2023-05-22)
+
+
+### Features
+
+* remove debug deps ([#112](https://github.com/sofastack/sofa-rpc-node/issues/112)) ([aada766](https://github.com/sofastack/sofa-rpc-node/commit/aada7662faddbc2f7eb0c5d200e4753d3ebbf0ba))
+
 ## [2.9.0](https://github.com/sofastack/sofa-rpc-node/compare/v2.8.0...v2.9.0) (2023-05-22)
 
 
@@ -327,4 +334,3 @@
 
 **others**
 ,fatal: No names found, cannot describe anything.
-
