@@ -6,6 +6,7 @@ const utility = require('utility');
 const urlparse = require('url').parse;
 const sleep = require('mz-modules/sleep');
 const AddressGroup = require('../../lib/client/address_group');
+const RandomLoadBalancer = require('../../lib/client/loadbalancer/random');
 const DynamicConfig = require('../../lib/client/dynamic_config');
 const ConnectionManager = require('../../').client.RpcConnectionMgr;
 const MockConnection = require('../fixtures/mock_connection');
@@ -1599,6 +1600,70 @@ describe('test/client/address_group.test.js', () => {
       assert(addressGroup._loadbalancer._needElasticControl(51));
       assert(!addressGroup._loadbalancer._needElasticControl(50));
       assert(!addressGroup._loadbalancer._needElasticControl(49));
+    });
+  });
+
+  describe('自定义loadbalancer', () => {
+    let addressGroup;
+    let addressList;
+    const count = 600;
+
+    beforeEach(async function() {
+      mm(DynamicConfig.instance.metric, 'numBuckets', 5);
+      mm(DynamicConfig.instance.metric, 'bucketSizeInMs', 100);
+      mm(DynamicConfig.instance.faultTolerance, 'leastWindowRtMultiple', 3);
+
+      addressList = [];
+      for (let i = 0; i < count; i++) {
+        const address = urlparse(`bolt://127.0.0.${i}:12400`, true);
+        addressList.push(address);
+        MockConnection.addAvailableAddress(address);
+      }
+
+      addressGroup = new AddressGroup({
+        key: 'com.alipay.TestQueryService:1.0@SOFA@xxxx',
+        logger,
+        connectionManager,
+        connectionClass: MockConnection,
+        createLoadBalancer: _addressGroup => new RandomLoadBalancer(_addressGroup),
+        retryFaultInterval: 5000,
+        connectionPoolConfig: {
+          minAddressCount: 5,
+          maxAddressCount: 50,
+          initConnectionSize: 6,
+          elasticControl: true,
+          capacityPerConnection: 300,
+        },
+      });
+      addressGroup.addressList = addressList;
+      await addressGroup.ready();
+
+      assert(addressGroup.connectionPoolSize === 6);
+    });
+
+    afterEach(async function() {
+      MockConnection.clearAvailableAddress();
+      addressGroup.close();
+      await connectionManager.closeAllConnections();
+      mm.restore();
+    });
+
+    it('各属性值赋值正确', async () => {
+      assert(addressGroup._allAddressList.length === count);
+      assert(addressGroup._allAddressList === addressList);
+      assert(addressGroup.totalSize === count);
+      assert(addressGroup.choosedSize === 6);
+      assert(addressGroup.addressList.length === 6);
+
+      for (const address of addressGroup.addressList) {
+        assert(addressGroup._weightMap.has(address.host));
+        assert(addressGroup._weightMap.get(address.host) === 100);
+      }
+
+      assert(addressGroup._faultAddressMap.size === 0);
+      assert(addressGroup._degradeEnable);
+      const connection = await addressGroup.getConnection(req);
+      assert(connection && connection.isConnected);
     });
   });
 });
